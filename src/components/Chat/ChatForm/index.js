@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../../Firebase';
 import Message from '../Message';
 
 
