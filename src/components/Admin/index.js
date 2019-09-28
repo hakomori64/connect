@@ -38,20 +38,28 @@ class AdminPage extends Component {
 
                 {loading && <div>Loading ...</div>}
 
-                <UserList users={users} />
+                <UserTable users={users} />
             </div>
         )
     }
 }
 
-const UserList = ({ users }) => (
+const UserTable = ({ users }) => (
     <table border="1">
-        <tr><th>ID</th><th>E-Mail</th><th>Username</th></tr>
-        {users.map(user => (
+        <thead>
             <tr>
-                <td>{user.uid}</td><td>{user.email}</td><td>{user.username}</td>
+                <th>ID</th>
+                <th>E-Mail</th>
+                <th>Username</th>
             </tr>
-        ))}
+        </thead>
+        <tbody>
+            {users.map((user, key) => (
+                <tr key={key}>
+                    <td>{user.uid}</td><td>{user.email}</td><td>{user.username}</td>
+                </tr>
+            ))}
+        </tbody>
     </table>
 )
 
