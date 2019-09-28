@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import SignOutButton from '../auth/SignOut';
+import SignOutButton from '../Auth/SignOut';
 import * as ROUTES from '../../constants/routes';
-import { AuthUserContext } from '../auth/Session';
+import { AuthUserContext } from '../Auth/Session';
 
 const Navigation = () => (
     <div>
