@@ -3,9 +3,12 @@ import React from 'react';
 const Message = ({message, index}) => (
     <li key={index}>
         <span>
-            {message.userName}:
+            {message.left_by}:
         </span>
-        {message.message}
+        {message.content}
+        <small>
+            {message.timestamp.toString()}
+        </small>
     </li>
 )
 
