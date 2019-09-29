@@ -19,8 +19,9 @@ class ChatFormBase extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         const chat = {
-            message: this.state.message,
-            userName: this.props.user.email,
+            content: this.state.message,
+            left_by: this.props.user.email,
+            timestamp: new Date(),
         };
         this.props.firebase.general().push(chat);
         const chats = this.state.chats;
