@@ -6,8 +6,12 @@ import Message from '../Message';
 class ChatRoom extends React.Component {
     constructor(props) {
         super(props);
+        const message_ref = this.props.firebase.store
+            .collection('rooms')
+            .doc(this.props.room_id)
+            .collection('messages');
         this.state = {
-            message_ref: this.props.firebase.store.collection('rooms').doc(this.props.room_id).collection('messages'),
+            message_ref: message_ref,
             typing_message: '',
             messages: [],
         };
