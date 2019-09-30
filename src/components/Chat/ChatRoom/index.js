@@ -19,8 +19,8 @@ class ChatRoom extends React.Component {
     }
 
     componentDidMount() {
-        this.state.message_ref.orderBy('timestamp', 'asc').get()
-            .then(querySnapshot => {
+        this.state.message_ref.orderBy('timestamp', 'asc')
+            .onSnapshot(querySnapshot => {
                 const messages = [];
                 querySnapshot.forEach(doc => {
                     const data = doc.data();
@@ -44,10 +44,11 @@ class ChatRoom extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
+        console.log(this.props.user);
         const messages = this.state.messages;
         const message = {
             content: this.state.typing_message,
-            left_by: this.props.user.email,
+            left_by: this.props.user.username,
             timestamp: new Date(),
         };
         messages.push(message);
