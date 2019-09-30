@@ -11,9 +11,9 @@ const withAuthorization = condition => Component => {
     class WithAuthorization extends React.Component {
         constructor(props) {
             super(props);
-            const message_ref = this.props.firebase.store.collection('users');
+            const users_ref = this.props.firebase.store.collection('users');
             this.state = {
-                message_ref: message_ref,
+                message_ref: users_ref,
             }
 
             this.componentDidMount.bind(this);
@@ -26,7 +26,7 @@ const withAuthorization = condition => Component => {
                     if (!condition(authUser)) {
                         this.props.history.push(ROUTES.SIGN_IN);
                     } else {
-                        this.state.message_ref.doc(authUser.uid).get()
+                        this.state.users_ref.doc(authUser.uid).get()
                             .then(doc => {
                                 this.setState({
                                     authUser: doc.data(),

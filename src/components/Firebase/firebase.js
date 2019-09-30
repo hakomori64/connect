@@ -20,6 +20,7 @@ class Firebase {
         this.auth = app.auth();
         this.db = app.database();
         this.store = app.firestore();
+        this.storage = app.storage();
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
