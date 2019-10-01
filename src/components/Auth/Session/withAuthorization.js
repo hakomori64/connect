@@ -12,8 +12,10 @@ const withAuthorization = condition => Component => {
         constructor(props) {
             super(props);
             const users_ref = this.props.firebase.store.collection('users');
+            const images_ref = this.props.firebase.storage.ref('users');
             this.state = {
                 users_ref: users_ref,
+                images_ref: images_ref,
             }
 
             this.componentDidMount.bind(this);
@@ -32,6 +34,29 @@ const withAuthorization = condition => Component => {
                                     authUser: doc.data(),
                                 });
                             });
+                        const icon_ref = this.state.images_ref.child(`${authUser.uid}/icon.png`);
+                        icon_ref.getDownloadURL().then(url => {
+                            const user_data = this.state.authUser;
+                            user_data.icon_url = url;
+                            this.setState({
+                                authUser: user_data,
+                            });
+                        }).catch(error => {
+                            switch(error.code) {
+                                case 'storage/object-not-found':
+                                    const icon_ref = this.state.images_ref.child('default.png');
+                                    icon_ref.getDownloadURL().then(url => {
+                                        const user_data = this.state.authUser;
+                                        user_data.icon_url = url;
+                                        this.setState({
+                                            authUser: user_data,
+                                        });
+                                    })
+                                    break;
+                                default:
+                                    return;
+                            }
+                        });
                     }
                 }
             );
