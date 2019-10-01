@@ -13,7 +13,7 @@ const withAuthorization = condition => Component => {
             super(props);
             const users_ref = this.props.firebase.store.collection('users');
             this.state = {
-                message_ref: users_ref,
+                users_ref: users_ref,
             }
 
             this.componentDidMount.bind(this);
