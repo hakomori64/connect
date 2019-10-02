@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 import { withFirebase} from '../../Firebase';
 import * as ROUTES from '../../../constants/routes';
-import { AuthUserContext } from '.';
+import { AuthUserContext,  } from '.';
 
 
 const withAuthorization = condition => Component => {
