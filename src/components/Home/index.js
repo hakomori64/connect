@@ -1,6 +1,5 @@
 import React from 'react';
 import { withAuthorization } from '../Auth/Session';
-import ChatFormPage from '../Chat/ChatForm';
 import ChatRoom from '../Chat/ChatRoom';
 
 const HomePage = props => (

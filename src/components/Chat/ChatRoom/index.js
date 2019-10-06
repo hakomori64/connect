@@ -1,13 +1,19 @@
 import React from 'react';
 import { withFirebase } from '../../Firebase';
+import withUserInfo from '../../Auth/Session/withUserInfo';
 import Message from '../Message';
+import { compose } from 'recompose';
 
 
 class ChatRoom extends React.Component {
     constructor(props) {
         super(props);
+        const message_ref = this.props.firebase.store
+            .collection('rooms')
+            .doc(this.props.room_id)
+            .collection('messages');
         this.state = {
-            message_ref: this.props.firebase.store.collection('rooms').doc(this.props.room_id).collection('messages'),
+            message_ref: message_ref,
             typing_message: '',
             messages: [],
         };
@@ -15,13 +21,14 @@ class ChatRoom extends React.Component {
     }
 
     componentDidMount() {
-        this.state.message_ref.orderBy('timestamp', 'asc').get()
-            .then(querySnapshot => {
+        this.state.message_ref.orderBy('timestamp', 'asc')
+            .onSnapshot(querySnapshot => {
                 const messages = [];
                 querySnapshot.forEach(doc => {
                     const data = doc.data();
                     const message = {
                         left_by: data.left_by,
+                        icon_url: data.icon_url,
                         content: data.content,
                         timestamp: data.timestamp.toDate(),
                     };
@@ -40,10 +47,12 @@ class ChatRoom extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
+        console.log(this.props.user_info);
         const messages = this.state.messages;
         const message = {
             content: this.state.typing_message,
-            left_by: this.props.user.email,
+            left_by: this.props.user_info.username,
+            icon_url: this.props.user_info.icon_url,
             timestamp: new Date(),
         };
         messages.push(message);
@@ -78,4 +87,4 @@ class ChatRoom extends React.Component {
     }
 }
 
-export default withFirebase(ChatRoom);
+export default compose(withFirebase, withUserInfo)(ChatRoom);
