@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserInfoContext } from '.';
+import { UserInfoContext } from './context';
 
 const withUserInfo = Component => props => (
     <UserInfoContext.Consumer>

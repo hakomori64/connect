@@ -1,6 +1,8 @@
 import React from 'react';
 import { withFirebase } from '../../Firebase';
+import withUserInfo from '../../Auth/Session/withUserInfo';
 import Message from '../Message';
+import { compose } from 'recompose';
 
 
 class ChatRoom extends React.Component {
@@ -45,12 +47,12 @@ class ChatRoom extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(this.props.user);
+        console.log(this.props.user_info);
         const messages = this.state.messages;
         const message = {
             content: this.state.typing_message,
-            left_by: this.props.user.username,
-            icon_url: this.props.user.icon_url,
+            left_by: this.props.user_info.username,
+            icon_url: this.props.user_info.icon_url,
             timestamp: new Date(),
         };
         messages.push(message);
@@ -85,4 +87,4 @@ class ChatRoom extends React.Component {
     }
 }
 
-export default withFirebase(ChatRoom);
+export default compose(withFirebase, withUserInfo)(ChatRoom);

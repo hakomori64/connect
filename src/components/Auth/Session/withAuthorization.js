@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 import { withFirebase} from '../../Firebase';
 import * as ROUTES from '../../../constants/routes';
-import { AuthUserContext,  } from '.';
+import { AuthUserContext, UserInfoContext } from './context';
 
 
 const withAuthorization = condition => Component => {
@@ -70,7 +70,12 @@ const withAuthorization = condition => Component => {
             return (
                 <AuthUserContext.Consumer>
                     {authUser =>
-                        condition(authUser) ? <Component {...this.props} authUser={this.state.authUser} /> : null
+                        condition(authUser) ? 
+                        <UserInfoContext.Provider value={this.state.authUser}>
+                            <Component {...this.props} />
+                        </UserInfoContext.Provider>
+                        :
+                        null
                     }
                 </AuthUserContext.Consumer>
             )
