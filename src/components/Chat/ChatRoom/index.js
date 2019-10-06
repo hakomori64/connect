@@ -21,6 +21,7 @@ class ChatRoom extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.user_info);
         this.state.message_ref.orderBy('timestamp', 'asc')
             .onSnapshot(querySnapshot => {
                 const messages = [];
