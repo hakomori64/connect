@@ -30,33 +30,30 @@ const withAuthorization = condition => Component => {
                     } else {
                         this.state.users_ref.doc(authUser.uid).get()
                             .then(doc => {
-                                this.setState({
-                                    authUser: doc.data(),
+                                const icon_ref = this.state.images_ref.child(`${authUser.uid}/icon.png`);
+                                icon_ref.getDownloadURL().then(url => {
+                                    const user_data = doc.data();
+                                    user_data.icon_url = url;
+                                    this.setState({
+                                        authUser: user_data,
+                                    });
+                                }).catch(error => {
+                                    switch(error.code) {
+                                        case 'storage/object-not-found':
+                                            const icon_ref = this.state.images_ref.child('default.png');
+                                            icon_ref.getDownloadURL().then(url => {
+                                                const user_data = doc.data();
+                                                user_data.icon_url = url;
+                                                this.setState({
+                                                    authUser: user_data,
+                                                });
+                                            })
+                                            break;
+                                        default:
+                                            return;
+                                    }
                                 });
                             });
-                        const icon_ref = this.state.images_ref.child(`${authUser.uid}/icon.png`);
-                        icon_ref.getDownloadURL().then(url => {
-                            const user_data = this.state.authUser;
-                            user_data.icon_url = url;
-                            this.setState({
-                                authUser: user_data,
-                            });
-                        }).catch(error => {
-                            switch(error.code) {
-                                case 'storage/object-not-found':
-                                    const icon_ref = this.state.images_ref.child('default.png');
-                                    icon_ref.getDownloadURL().then(url => {
-                                        const user_data = this.state.authUser;
-                                        user_data.icon_url = url;
-                                        this.setState({
-                                            authUser: user_data,
-                                        });
-                                    })
-                                    break;
-                                default:
-                                    return;
-                            }
-                        });
                     }
                 }
             );
