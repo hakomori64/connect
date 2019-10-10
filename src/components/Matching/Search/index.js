@@ -7,16 +7,16 @@ class Search extends React.Component {
     const user_id = this.props.user_info;
     construnctor(props) {
         super(props);
-        this.componentWillMount.bind(this);
-
-        this.componentDidMount.bind(this);
-    }
-
-    componentWillMount.bind() {
         const user_set = this.props.firebase.store
             .collection('users')
             .doc(this.props.userID)
             .collection('have_want_set');
+
+        this.componentDidMount.bind(this);
+    }
+
+    getInitialState() {
+        
     }
 
     componentDidMount() {
