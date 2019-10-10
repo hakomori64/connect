@@ -17,7 +17,18 @@ class ChangeProfileForm extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-
+        const { file } = this.state;
+        console.log(file);
+        if (!file) return;
+        console.log("hello");
+        const uploadTask = this.state.images_ref.child(this.props.user_info.userID).child("icon").put(file);
+        uploadTask.on(
+            'state_changed',
+            snapshot => {},
+            error => {},
+            () => {
+            }
+        )
     }
 
     handleImageChange = event => {

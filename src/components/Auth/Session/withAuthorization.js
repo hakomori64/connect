@@ -36,7 +36,6 @@ const withAuthorization = condition => Component => {
                             .then(doc => {
                                 this.state.images_ref.child(authUser.uid).listAll().then(res => {
                                     if (res.items[0]) {
-                                        console.log(res.items[0]);
                                         const icon_ref = res.items[0];
                                         icon_ref.getDownloadURL().then(url => {
                                             const user_data = doc.data();
