@@ -12,6 +12,7 @@ class ChangeProfileForm extends React.Component {
             images_ref: images_ref,
             typing_description: null,
             icon_image_url: null,
+            loading: false,
         };
     }
 
@@ -19,17 +20,31 @@ class ChangeProfileForm extends React.Component {
         event.preventDefault();
         const { file } = this.state;
         if (!file) return;
-        this.state.images_ref.child(this.props.user_info.userID).child("icon").put(file)
-            .then(snapshot => {
-                const icon_ref = snapshot.ref;
+        const uploadTask = this.state.images_ref.child(this.props.user_info.userID).child("icon").put(file);
+        
+        uploadTask.on(
+            'state_changed', 
+            snapshot => {
+                const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+                this.setState({
+                    file: null,
+                    image_preview_url: null,
+                    loading: true,
+                    progress: progress,
+                });
+            },
+            error => {},
+            () => {
+                const icon_ref = uploadTask.snapshot.ref;
                 icon_ref.getDownloadURL().then(url => {
                     this.setState({
-                        file: null,
-                        image_preview_url: null,
+                        loading: false,
+                        progress: 0,
                         icon_image_url: url,
                     });
-                })
-            })
+                });
+            }
+        );
     }
 
     handleImageChange = event => {
@@ -57,9 +72,12 @@ class ChangeProfileForm extends React.Component {
         }
         const image_preview = !!image_preview_url ? (<img height="300px" width="300px" src={image_preview_url} alt="" />) : (<div>Please select an Image for Preview</div>);
 
+        const progress = this.state.loading ? <div>Now Uploading Image : {Math.floor(this.state.progress)} %</div> : null;
+
         return (
             <div>
                 {icon_image}
+                {progress}
                 <form onSubmit={this.handleSubmit}>
                     <input type="file" onChange={this.handleImageChange} />
                     <button type="submit" onClick={this.handleSubmit}>Upload Image</button>
