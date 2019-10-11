@@ -3,6 +3,7 @@ import { withFirebase } from '../../Firebase';
 import withUserInfo from '../../Auth/Session/withUserInfo';
 import Message from '../Message';
 import { compose } from 'recompose';
+import { withAuthorization } from '../../Auth/Session';
 
 
 class ChatRoom extends React.Component {
@@ -10,7 +11,7 @@ class ChatRoom extends React.Component {
         super(props);
         const message_ref = this.props.firebase.store
             .collection('rooms')
-            .doc(this.props.room_id)
+            .doc(this.props.match.params.room_id)
             .collection('messages');
         this.state = {
             message_ref: message_ref,
@@ -84,4 +85,5 @@ class ChatRoom extends React.Component {
     }
 }
 
-export default compose(withFirebase, withUserInfo)(ChatRoom);
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(compose(withFirebase, withUserInfo)(ChatRoom));
