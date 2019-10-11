@@ -6,12 +6,6 @@ import {
 
 
 class RoomList extends React.Component {
-    componentDidMount() {
-        if (this.props.user_info) {
-
-        }
-    }
-
 
     render() {
         return (
