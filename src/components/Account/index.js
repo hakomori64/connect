@@ -7,16 +7,11 @@ import ChangeProfileForm from './ChangeProfileForm';
 
 
 const AccountPage = props => {
-    console.log(props.user_info);
-    const message = props.user_info ? <div>{props.user_info.email}</div> : <div>Loading...</div>;
-    const image = props.user_info ? <img src={props.user_info.icon_url} alt={props.user_info.username} width="200px" height="200px" /> : null;
     return (
         <div>
-            {message}
-            {image}
+            <ChangeProfileForm />
             <PasswordForgetForm />
             <PasswordChangeForm />
-            <ChangeProfileForm />
         </div>
     )
 }

@@ -18,17 +18,18 @@ class ChangeProfileForm extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         const { file } = this.state;
-        console.log(file);
         if (!file) return;
-        console.log("hello");
-        const uploadTask = this.state.images_ref.child(this.props.user_info.userID).child("icon").put(file);
-        uploadTask.on(
-            'state_changed',
-            snapshot => {},
-            error => {},
-            () => {
-            }
-        )
+        this.state.images_ref.child(this.props.user_info.userID).child("icon").put(file)
+            .then(snapshot => {
+                const icon_ref = snapshot.ref;
+                icon_ref.getDownloadURL().then(url => {
+                    this.setState({
+                        file: null,
+                        image_preview_url: null,
+                        icon_image_url: url,
+                    });
+                })
+            })
     }
 
     handleImageChange = event => {
@@ -47,11 +48,18 @@ class ChangeProfileForm extends React.Component {
     }
 
     render() {
-        const { image_preview_url } = this.state;
-        const image_preview = !!image_preview_url ? (<img height="100px" width="100px" src={image_preview_url} alt="" />) : (<div>Please select an Image for Preview</div>);
+        const { image_preview_url, icon_image_url } = this.state;
+        let icon_image = null;
+        if (icon_image_url) {
+            icon_image = <img src={icon_image_url} alt="YOU" width="200px" height="200px" />;
+        } else if (this.props.user_info) {
+            icon_image = <img src={this.props.user_info.icon_url} alt={this.props.user_info.username} width="200px" height="200px" />;
+        }
+        const image_preview = !!image_preview_url ? (<img height="300px" width="300px" src={image_preview_url} alt="" />) : (<div>Please select an Image for Preview</div>);
 
         return (
             <div>
+                {icon_image}
                 <form onSubmit={this.handleSubmit}>
                     <input type="file" onChange={this.handleImageChange} />
                     <button type="submit" onClick={this.handleSubmit}>Upload Image</button>
