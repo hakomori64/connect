@@ -28,7 +28,6 @@ class ChatRoom extends React.Component {
                     const data = doc.data();
                     const message = {
                         left_by: data.left_by,
-                        icon_url: data.icon_url,
                         content: data.content,
                         timestamp: data.timestamp.toDate(),
                     };
@@ -38,7 +37,6 @@ class ChatRoom extends React.Component {
                     messages: messages
                 });
         });
-        console.log(this.state);
     }
 
     handleChange = event => {
@@ -47,12 +45,10 @@ class ChatRoom extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(this.props.user_info);
         const messages = this.state.messages;
         const message = {
             content: this.state.typing_message,
             left_by: this.props.user_info.username,
-            icon_url: this.props.user_info.icon_url,
             timestamp: new Date(),
         };
         messages.push(message);
@@ -65,12 +61,11 @@ class ChatRoom extends React.Component {
     }
 
     render() {
-
         return (
             <div>
                 <div>
                     {this.state.messages.map((message, index) => (
-                        <Message message={message} key={index} />
+                        this.props.user_info ? <Message icon_url={this.props.user_info.icon_url} message={message} key={index} /> : null
                     ))}
                 </div>
                 <form onSubmit={this.handleSubmit}>

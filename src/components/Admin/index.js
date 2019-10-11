@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withFirebase } from '../Firebase';
+import { withAuthorization } from '../Auth/Session';
 
 class AdminPage extends Component {
     constructor(props) {
@@ -12,22 +12,18 @@ class AdminPage extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        this.props.firebase.users().on('value', snapshot => {
-            const usersObject = snapshot.val();
-            const usersList = Object.keys(usersObject).map(key => ({
-                ...usersObject[key],
-                uid: key,
-            }));
-            this.setState({
-                users: usersList,
-                loading: false,
+        this.props.firebase.store.collection("users").onSnapshot(snapshot => {
+            const users = [];
+            snapshot.forEach(doc => {
+                users.push(doc.data());
             });
+            this.setState({
+                users: users,
+                loading: false,
+            })
         });
     }
-
-    componentWillUnmount() {
-        this.props.firebase.users().off();
-    }
+    
 
     render() {
         const { users, loading } = this.state;
@@ -56,11 +52,12 @@ const UserTable = ({ users }) => (
         <tbody>
             {users.map((user, key) => (
                 <tr key={key}>
-                    <td>{user.uid}</td><td>{user.email}</td><td>{user.username}</td>
+                    <td>{user.userID}</td><td>{user.email}</td><td>{user.username}</td>
                 </tr>
             ))}
         </tbody>
     </table>
 )
 
-export default withFirebase(AdminPage);
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(AdminPage);
