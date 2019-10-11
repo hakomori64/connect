@@ -7,9 +7,9 @@ const Img = styled.img`
     width: 50px;
 `
 
-const Message = ({icon_url, message, index}) => (
+const Message = ({message, index}) => (
     <li key={index}>
-        <Img src={icon_url} alt={message.left_by} />
+        <Img src={message.icon_url} alt={message.left_by} />
         <span>
             {message.left_by}:
         </span>
