@@ -29,7 +29,7 @@ class ChatRoom extends React.Component {
                     const data = doc.data();
                     const message = {
                         left_by: data.left_by,
-                        icon_url: data.icon_url,
+                        left_user_id: data.left_user_id,
                         content: data.content,
                         timestamp: data.timestamp.toDate(),
                     };
@@ -50,7 +50,7 @@ class ChatRoom extends React.Component {
         const messages = this.state.messages;
         const message = {
             left_by: this.props.user_info.username,
-            icon_url: this.props.user_info.icon_url,
+            left_user_id: this.props.user_info.userID,
             content: this.state.typing_message,
             timestamp: new Date(),
         };
