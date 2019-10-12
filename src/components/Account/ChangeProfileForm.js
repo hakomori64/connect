@@ -1,7 +1,5 @@
 import React from 'react';
-import { compose } from 'recompose';
-import { withFirebase } from '../Firebase';
-import withUserInfo from '../Auth/Session/withUserInfo';
+import { withAuthorization } from '../Auth/Session';
 
 
 class ChangeProfileForm extends React.Component {
@@ -20,7 +18,7 @@ class ChangeProfileForm extends React.Component {
         event.preventDefault();
         const { file } = this.state;
         if (!file) return;
-        const uploadTask = this.state.images_ref.child(this.props.user_info.userID).child("icon").put(file);
+        const uploadTask = this.state.images_ref.child(this.props.authUser.userID).child("icon").put(file);
         
         uploadTask.on(
             'state_changed', 
@@ -67,12 +65,13 @@ class ChangeProfileForm extends React.Component {
         let icon_image = null;
         if (icon_image_url) {
             icon_image = <img src={icon_image_url} alt="YOU" width="200px" height="200px" />;
-        } else if (this.props.user_info) {
-            icon_image = <img src={this.props.user_info.icon_url} alt={this.props.user_info.username} width="200px" height="200px" />;
+        } else if (this.props.authUser) {
+            icon_image = <img src={this.props.authUser.icon_url} alt={this.props.authUser.username} width="200px" height="200px" />;
         }
         const image_preview = !!image_preview_url ? (<img height="300px" width="300px" src={image_preview_url} alt="" />) : (<div>Please select an Image for Preview</div>);
 
         const progress = this.state.loading ? <div>Now Uploading Image : {Math.floor(this.state.progress)} %</div> : null;
+        console.log(this.props.authUser);
 
         return (
             <div>
@@ -91,4 +90,5 @@ class ChangeProfileForm extends React.Component {
 
 }
 
-export default compose(withFirebase, withUserInfo)(ChangeProfileForm);
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(ChangeProfileForm);

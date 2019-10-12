@@ -1,8 +1,5 @@
 import React from 'react';
-import { withFirebase } from '../../Firebase';
-import withUserInfo from '../../Auth/Session/withUserInfo';
 import Message from '../Message';
-import { compose } from 'recompose';
 import { withAuthorization } from '../../Auth/Session';
 
 
@@ -48,9 +45,10 @@ class ChatRoom extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         const messages = this.state.messages;
+        
         const message = {
-            left_by: this.props.user_info.username,
-            left_user_id: this.props.user_info.userID,
+            left_by: this.props.authUser.username,
+            left_user_id: this.props.authUser.userID,
             content: this.state.typing_message,
             timestamp: new Date(),
         };
@@ -68,7 +66,7 @@ class ChatRoom extends React.Component {
             <div>
                 <div>
                     {this.state.messages.map((message, index) => (
-                        this.props.user_info ? <Message message={message} key={index} /> : null
+                        this.props.authUser ? <Message message={message} key={index} /> : null
                     ))}
                 </div>
                 <form onSubmit={this.handleSubmit}>
@@ -86,4 +84,4 @@ class ChatRoom extends React.Component {
 }
 
 const condition = authUser => !!authUser;
-export default withAuthorization(condition)(compose(withFirebase, withUserInfo)(ChatRoom));
+export default withAuthorization(condition)(ChatRoom);
