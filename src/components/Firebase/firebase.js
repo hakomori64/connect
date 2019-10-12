@@ -21,6 +21,7 @@ class Firebase {
         this.auth = app.auth();
         this.store = app.firestore();
         this.storage = app.storage();
+        this.authUser = null;
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -43,18 +44,18 @@ class Firebase {
                 .then(doc => {
                     const icon_ref = this.storage.ref(`users/${authUser.uid}/icon`);
                     icon_ref.getDownloadURL().then(url => {
-                        authUser = doc.data();
-                        authUser.icon_url = url;
+                        this.authUser = doc.data();
+                        this.authUser.icon_url = url;
                     }).catch(error => {
                         if (error.code === 'storage/object-not-found') {
                             const icon_ref = this.storage.ref('users/default.png');
                             icon_ref.getDownloadURL().then(url => {
-                                authUser = doc.data();
-                                authUser.icon_url = url;
+                                this.authUser = doc.data();
+                                this.authUser.icon_url = url;
                             })
                         }
                     }).finally(() => {
-                        next(authUser);
+                        next(this.authUser);
                     });
                 });
             } else {
