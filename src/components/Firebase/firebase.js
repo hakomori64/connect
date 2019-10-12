@@ -34,6 +34,32 @@ class Firebase {
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
     doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+    onAuthUserListener = (next, fallback) =>
+        this.auth.onAuthStateChanged(authUser => {
+            if (authUser) {
+                const user_ref = this.store.collection('users').doc(authUser.uid);
+                user_ref.get()
+                .then(doc => {
+                    authUser = doc.data();
+                    const icon_ref = this.storage.ref(`users/${authUser.uid}/icon`);
+                    icon_ref.getDownloadURL().then(url => {
+                        authUser.icon_url = url;
+                    }).catch(error => {
+                        if (error.code === 'storage/object-not-found') {
+                            const icon_ref = this.storage.ref('users/default.png');
+                            icon_ref.getDownloadURL().then(url => {
+                                authUser.icon_url = url;
+                            })
+                        }
+                    }).finally(() => {
+                        next(authUser);
+                    });
+                });
+            } else {
+                fallback();
+            }
+        });
 }
 
 export default Firebase;
