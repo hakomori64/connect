@@ -33,15 +33,17 @@ class SignUpFormBase extends Component {
                 authUser => {
                     const user_ref = this.props.firebase.store.collection('users').doc(authUser.user.uid);
 
-                    return user_ref.set({
+                    user_ref.set({
                         userID: authUser.user.uid,
                         username: username,
                         email: email,
                         description: '',
-                        give: [],
-                        take: [],
                         room_ids: [],
                         connect_request: [],
+                    });
+                    user_ref.collection("have_want_set").add({
+                        have: null,
+                        want: null,
                     });
                 }
             )

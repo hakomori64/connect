@@ -22,6 +22,10 @@ const withAuthorization = condition => Component => {
             this.componentWillUnmount.bind(this);
         }
 
+        setDefaultIconURL = doc => {
+
+        }
+
         componentDidMount() {
             this.listener = this.props.firebase.auth.onAuthStateChanged(
                 authUser => {
@@ -30,7 +34,7 @@ const withAuthorization = condition => Component => {
                     } else {
                         this.state.users_ref.doc(authUser.uid).get()
                             .then(doc => {
-                                const icon_ref = this.state.images_ref.child(`${authUser.uid}/icon.png`);
+                                const icon_ref = this.state.images_ref.child(`${authUser.uid}/icon`);
                                 icon_ref.getDownloadURL().then(url => {
                                     const user_data = doc.data();
                                     user_data.icon_url = url;
@@ -47,7 +51,7 @@ const withAuthorization = condition => Component => {
                                                 this.setState({
                                                     authUser: user_data,
                                                 });
-                                            })
+                                            });
                                             break;
                                         default:
                                             return;
