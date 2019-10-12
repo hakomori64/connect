@@ -41,14 +41,15 @@ class Firebase {
                 const user_ref = this.store.collection('users').doc(authUser.uid);
                 user_ref.get()
                 .then(doc => {
-                    authUser = doc.data();
                     const icon_ref = this.storage.ref(`users/${authUser.uid}/icon`);
                     icon_ref.getDownloadURL().then(url => {
+                        authUser = doc.data();
                         authUser.icon_url = url;
                     }).catch(error => {
                         if (error.code === 'storage/object-not-found') {
                             const icon_ref = this.storage.ref('users/default.png');
                             icon_ref.getDownloadURL().then(url => {
+                                authUser = doc.data();
                                 authUser.icon_url = url;
                             })
                         }

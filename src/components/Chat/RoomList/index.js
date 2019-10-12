@@ -20,4 +20,5 @@ class RoomList extends React.Component {
     }
 }
 
-export default withAuthorization(RoomList);
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(RoomList);
