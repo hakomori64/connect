@@ -71,7 +71,6 @@ class ChangeProfileForm extends React.Component {
         const image_preview = !!image_preview_url ? (<img height="300px" width="300px" src={image_preview_url} alt="" />) : (<div>Please select an Image for Preview</div>);
 
         const progress = this.state.loading ? <div>Now Uploading Image : {Math.floor(this.state.progress)} %</div> : null;
-        console.log(this.props.authUser);
 
         return (
             <div>

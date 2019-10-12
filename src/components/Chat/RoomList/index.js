@@ -6,6 +6,10 @@ import {
 
 
 class RoomList extends React.Component {
+    componentDidMount() {
+        const rooms_info = {};
+
+    }
 
     render() {
         return (
