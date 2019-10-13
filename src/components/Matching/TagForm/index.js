@@ -2,7 +2,7 @@ import React from 'react';
 import { withFirebase } from '../../Firebase';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 
-class TagSelectForm extends React.Component {
+class TagForm extends React.Component {
     constructor(props) {
         super(props);
         const user_status = this.props.authUser;
@@ -13,7 +13,7 @@ class TagSelectForm extends React.Component {
 
         this.state = {
             items: items,
-            value: 0,
+            value: '',
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -49,9 +49,13 @@ class TagSelectForm extends React.Component {
                     value={this.state.value}
                     onChange={event => this.handleChange(event)}
                 >
+                    {options}
                 </select>
                 <input type='submit' />
                 </form>
+                <div>
+                    <Search selected_set_id={this.state.value} />
+                </div>
             </div>
         );
     }
