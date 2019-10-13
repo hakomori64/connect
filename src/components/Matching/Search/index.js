@@ -2,7 +2,6 @@ import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 
 class Search extends React.Component {
-
     constructor(props) {
         super(props);
 

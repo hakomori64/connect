@@ -1,30 +1,33 @@
 import React from 'react';
-import { withFirebase } from '../../Firebase';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import Search from '../Search';
 
 class TagForm extends React.Component {
-    componentDidMount() {
-        const user_status = this.props.authUser;
-        const items = this.props.firebase.store
-            .collection('users')
-            .doc(user_status.userID)
-            .collection('have_want_set');
-
+    constructor(props) {
+        super(props);
         this.state = {
-            items: items,
+            items: [],
             value: '',
         }
+    }
 
-        this.props.firebase.store.collection('users')
-            .doc(user_status.userID)
-            .collection('have_want_set')
-            .onSnapshot(
-                querySnapshot => {
-                    const firstElementData = querySnapshot.docs[0].data();
-                    this.setState(firstElementData);
-                }
-            );
+    componentDidMount() {
+        if (this.props.authUser) {
+            this.props.firebase.store.collection('users')
+                .doc(this.props.authUser.userID)
+                .collection('have_want_set')
+                .onSnapshot(
+                    querySnapshot => {
+                        const items = [];
+                        querySnapshot.forEach(doc => {
+                            items.push(doc.id);
+                        });
+                        this.setState({
+                            items: items
+                        });
+                    }
+                );
+        }
     }
 
     handleChange(event) {
@@ -38,17 +41,19 @@ class TagForm extends React.Component {
     render(){
         const options = this.state.items.map(i => {
             return (
-                <option key={i} 
-                        value={i}>
+                <option
+                    key={i} 
+                    value={i}>
                 {i}
-                </option>);
+                </option>
+            );
         });
         return (
             <div>
                 <form onSubmit={event => this.handleSubmit(event)}>
                 <select
                     value={this.state.value}
-                    onChange={event => this.handleChange(event)}
+                    onChange={this.handleChange}
                 >
                     {options}
                 </select>
@@ -61,4 +66,4 @@ class TagForm extends React.Component {
 }
 
 const condition = authUser => !!authUser;
-export default withFirebase(TagForm);
+export default withAuthorization(condition)(TagForm);
