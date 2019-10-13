@@ -10,6 +10,11 @@ class Search extends React.Component {
             user_list: null,
         }
     }
+    
+    componentDidMount() {
+        this.handleSearch(this.props.selected_set_id);
+        //this.setState(handleSearch(set));
+    }
 
     handleSearch(set) {
         //const have = this.props.selected_set_id.have;
@@ -27,10 +32,6 @@ class Search extends React.Component {
         return {};
     }
 
-    componentDidMount() {
-        this.handleSearch(this.props.selected_set_id);
-        //this.setState(handleSearch(set));
-    }
 
     render() {
         return (
