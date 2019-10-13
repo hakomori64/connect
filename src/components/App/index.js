@@ -13,7 +13,7 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import ChatRoom from '../Chat/ChatRoom';
-import Search from '../Matching/Search';
+import Matching from '../Matching';
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Auth/Session';
 import Request from '../Matching/Request';
@@ -32,8 +32,8 @@ const App = () => (
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.ADMIN} component={AdminPage} />
             <Route path={ROUTES.ROOM} component={ChatRoom} />
-            <Route path={ROUTES.SEARCH} component={Search} />
             <Route path="/request" component={() => <Request user_id="tEqo4R8tTdQ9QyzZ0QemxMcXdLp2" />} />
+            <Route path={ROUTES.MATCHING} component={Matching} />
         </div>
     </Router>
 )

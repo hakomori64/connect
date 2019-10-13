@@ -1,6 +1,7 @@
 import React from 'react';
 import { withFirebase } from '../../Firebase';
 import withAuthorization from '../../Auth/Session/withAuthorization';
+import Search from '../Search';
 
 class TagForm extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class TagForm extends React.Component {
             .doc(user_status.userID)
             .collection('have_want_set')
             .onSnapshot(
-                querySnapthot => {
+                querySnapshot => {
                     const firstElementData = querySnapshot.docs[0].data();
                     this.setState(firstElementData);
                 }
@@ -42,9 +43,16 @@ class TagForm extends React.Component {
     }
 
     render(){
+        const options = this.state.items.map(i => {
+            return (
+                <option key={i} 
+                        value={i}>
+                {i}
+                </option>);
+        });
         return (
             <div>
-                <form onSubmit={this.handleSubmit(event)}>
+                <form onSubmit={event => this.handleSubmit(event)}>
                 <select
                     value={this.state.value}
                     onChange={event => this.handleChange(event)}
@@ -53,9 +61,7 @@ class TagForm extends React.Component {
                 </select>
                 <input type='submit' />
                 </form>
-                <div>
-                    <Search selected_set_id={this.state.value} />
-                </div>
+                <Search selected_set_id={this.state.value} />
             </div>
         );
     }

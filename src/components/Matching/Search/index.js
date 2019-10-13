@@ -1,24 +1,28 @@
 import React from 'react';
-import { withFirebase } from '../../Firebase';
 import withAuthorization from '../../Auth/Session/withAuthorization';
-import { compose } from 'recompose';
 
 class Search extends React.Component {
 
     constructor(props) {
         super(props);
-        const user_status = this.props.authUser;
 
         this.state = {
             tags_list: this.props.firebase.store.collection('tags'),
-            my_name: this.props.username,
+            user_list: null,
         }
     }
 
     handleSearch(set) {
+        //const have = this.props.selected_set_id.have;
+        //const want = this.props.selected_set_id.want;
+
+        //console.log("have: "+have);
+        //console.log('want: '+want);
+        console.log(this.props.selected_set_id);
         this.state.tags_list.onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
                 console.log(doc.data());
+
             })
         });
         return {};
