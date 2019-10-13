@@ -3,8 +3,10 @@ import TagForm from './TagForm';
 
 class Matching extends React.Component {
     render () {
-        <TagForm />
+        return (
+            <TagForm />
+        );
     }
 }
 
-export default
+export default Matching();
