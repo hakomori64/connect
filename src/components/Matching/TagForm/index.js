@@ -26,7 +26,7 @@ class TagForm extends React.Component {
             .doc(user_status.userID)
             .collection('have_want_set')
             .onSnapshot(
-                querySnapthot => {
+                querySnapshot => {
                     const firstElementData = querySnapshot.docs[0].data();
                     this.setState(firstElementData);
                 }
@@ -53,9 +53,7 @@ class TagForm extends React.Component {
                 </select>
                 <input type='submit' />
                 </form>
-                <div>
-                    <Search selected_set_id={this.state.value} />
-                </div>
+                <Search selected_set_id={this.state.value} />
             </div>
         );
     }
