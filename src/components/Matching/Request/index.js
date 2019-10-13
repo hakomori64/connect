@@ -1,7 +1,6 @@
 import React from 'react';
-import { withFirebase } from '../../Firebase';
 import withAuthorization from '../../Auth/Session/withAuthorization';
-import { compose } from 'recompose';
+
 
 /**
  * This component should be used as below
@@ -46,16 +45,20 @@ class Request extends React.Component {
         if (this.state.user_info) {
             user_info = (
                 <div>
-                    <img src={this.state.user_info.icon_url} alt={this.state.user_info.username} />
+                    <img src={this.state.user_info.icon_url} alt={this.state.user_info.username} width="200px" height="200px" />
                     <div>user_name: {this.state.user_info.username}</div>
                     <div>email: {this.state.user_info.email}</div>
                     <div>description: </div>
                     <div>{this.state.user_info.description}</div>
                 </div>
             )
+        } else {
+            user_info = (
+                <div>Loading...</div>
+            )
         }
         return (
-
+            <div>{user_info}</div>
         )
     }
 }
