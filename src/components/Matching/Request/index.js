@@ -15,29 +15,10 @@ class Request extends React.Component {
     }
 
     componentDidMount() {
-        const user_id = this.props.user_id;
-        this.props.firebase.store.collection('users').doc(user_id)
-            .onSnapshot(doc => {
-                const icon_ref = this.props.firebase.storage.ref(`users/${user_id}/icon`);
-                icon_ref.getDownloadURL().then(url => {
-                    const user_info = doc.data();
-                    user_info.icon_url = url;
-                    this.setState({
-                        user_info: user_info,
-                    });
-                }).catch(error => {
-                    if (error.code === 'storage/object-not-found') {
-                        const icon_ref = this.storage.ref('users/default.png');
-                        icon_ref.getDownloadURL().then(url => {
-                            const user_info = doc.data();
-                            user_info.icon_url = url;
-                            this.setState({
-                                user_info: user_info,
-                            });
-                        });
-                    }
-                });
-            });
+        this.props.firebase.getUserInfo(
+            user_info => this.setState({user_info}),
+            () => this.setState({user_info: null}),
+        )(this.props.user_id);
     }
 
     render() {
