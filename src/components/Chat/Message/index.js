@@ -3,10 +3,31 @@ import styled from 'styled-components';
 import { withFirebase } from '../../Firebase';
 
 
+
+const Container = styled.div`
+display: grid;
+grid-template-columns: 60px auto;
+grid-template-rows: 30px auto;
+`;
+const Thumbnail = styled.div`
+grid-row: 1/3;
+grid-column: 1/2;
+`;
+
 const Img = styled.img`
-    height: 50px;
-    width: 50px;
-`
+height: 50px;
+width: 50px;
+`;
+
+const Header = styled.div`
+grid-column:2/3;
+grid-row:1/2;
+`;
+const Sentanse = styled.div`
+grid-column:2/3;
+grid-row:2/3;
+`;
+
 
 class Message extends React.Component {
     constructor(props) {
@@ -37,16 +58,19 @@ class Message extends React.Component {
 
     render() {
         return (
-            <li key={this.props.index}>
-                <Img src={this.state.icon_url} alt={this.props.message.left_by} />
-                <span>
-                    {this.props.message.left_by}:
-                </span>
-                {this.props.message.content}
-                <small>
+            <Container>
+                <Thumbnail>
+                    <Img src={this.state.icon_url} alt={this.props.message.left_by} />
+                </Thumbnail>
+                <Header>
+                    {this.props.message.left_by}
                     {this.props.message.timestamp.toString()}
-                </small>
-            </li>
+                </Header>
+                <Sentanse>
+                    {this.props.message.content}
+                </Sentanse>
+            </Container>
+
         )
     }
 }
