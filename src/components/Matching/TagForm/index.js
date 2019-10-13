@@ -34,9 +34,7 @@ class TagSelectForm extends React.Component {
     }
 
     handleChange(event) {
-        const curValue = event.target.value;
-        const newValue = curValue.replace(/[^0-9]/g,'');
-        this.setState({value: newValue});
+        this.setState({ value: event.target.value });
     }
 
     handleSubmit(event) {
@@ -46,10 +44,13 @@ class TagSelectForm extends React.Component {
     render(){
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                <input
-                    value=;
-                />
+                <form onSubmit={this.handleSubmit(event)}>
+                <select
+                    value={this.state.value}
+                    onChange={event => this.handleChange(event)}
+                >
+                </select>
+                <input type='submit' />
                 </form>
             </div>
         );
