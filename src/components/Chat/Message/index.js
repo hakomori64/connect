@@ -29,7 +29,7 @@ color:gray;
 font-size: 10px;
 `;
 
-const Sentanse = styled.div`
+const Sentence = styled.div`
 grid-column:2/3;
 grid-row:2/3;
 `;
@@ -86,9 +86,9 @@ class Message extends React.Component {
                         {this.getDateString(this.props.message.timestamp)}
                     </Time_color>
                 </Header>
-                <Sentanse>
+                <Sentence>
                     {this.props.message.content}
-                </Sentanse>
+                </Sentence>
             </Container>
 
         )
