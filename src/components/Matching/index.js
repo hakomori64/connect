@@ -9,4 +9,4 @@ class Matching extends React.Component {
     }
 }
 
-export default Matching();
+export default Matching;
