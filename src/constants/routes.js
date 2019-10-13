@@ -7,4 +7,4 @@ export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
 export const ROOM_LIST = '/rooms';
 export const ROOM = '/rooms/:room_id';
-export const MATCHING = '/seatch';
+export const MATCHING = '/search';

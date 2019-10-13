@@ -4,8 +4,7 @@ import withAuthorization from '../../Auth/Session/withAuthorization';
 import Search from '../Search';
 
 class TagForm extends React.Component {
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         const user_status = this.props.authUser;
         const items = this.props.firebase.store
             .collection('users')
@@ -17,12 +16,6 @@ class TagForm extends React.Component {
             value: '',
         }
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount() {
-        const user_status = this.props.authUser;
         this.props.firebase.store.collection('users')
             .doc(user_status.userID)
             .collection('have_want_set')
