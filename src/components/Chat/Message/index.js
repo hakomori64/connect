@@ -23,7 +23,7 @@ const Header = styled.div`
 grid-column:2/3;
 grid-row:1/2;
 `;
-const Sentanse = styled.div`
+const Sentence = styled.div`
 grid-column:2/3;
 grid-row:2/3;
 `;
@@ -66,9 +66,9 @@ class Message extends React.Component {
                     {this.props.message.left_by}
                     {this.props.message.timestamp.toString()}
                 </Header>
-                <Sentanse>
+                <Sentence>
                     {this.props.message.content}
-                </Sentanse>
+                </Sentence>
             </Container>
 
         )
