@@ -23,6 +23,12 @@ const Header = styled.div`
 grid-column:2/3;
 grid-row:1/2;
 `;
+
+const Time_color = styled.span`
+color:gray;
+font-size: 10px;
+`;
+
 const Sentence = styled.div`
 grid-column:2/3;
 grid-row:2/3;
@@ -43,6 +49,18 @@ class Message extends React.Component {
         )(this.props.message.left_user_id);
     }
 
+    getDateString = date => {
+        const dateString =
+            date.getUTCFullYear() + "/" +
+            ("0" + (date.getUTCMonth() + 1)).slice(-2) + "/" +
+            ("0" + date.getUTCDate()).slice(-2) + " " +
+            ("0" + date.getUTCHours()).slice(-2) + ":" +
+            ("0" + date.getUTCMinutes()).slice(-2) + ":" +
+            ("0" + date.getUTCSeconds()).slice(-2);
+        return dateString;
+    }
+
+
     render() {
         return (
             <Container>
@@ -51,7 +69,9 @@ class Message extends React.Component {
                 </Thumbnail>
                 <Header>
                     {this.props.message.left_by}
-                    {this.props.message.timestamp.toString()}
+                    <Time_color>
+                        {this.getDateString(this.props.message.timestamp)}
+                    </Time_color>
                 </Header>
                 <Sentence>
                     {this.props.message.content}
