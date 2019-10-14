@@ -34,7 +34,7 @@ class Search extends React.Component {
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.authUser && !this.props.authUser) {
             console.log("here");
             this.props.firebase.store
@@ -59,6 +59,8 @@ class Search extends React.Component {
             });
             //console.log("selected users list: " + this.state.users_list);
         }
+
+        return true;
     }
 
     getUserIDs = (tag_ids, target) => {
