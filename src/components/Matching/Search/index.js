@@ -36,6 +36,7 @@ class Search extends React.Component {
 
     componentWillUpdate(nextProps, nextState) {
         if (nextProps.authUser && !this.props.authUser) {
+            console.log("here");
             this.props.firebase.store
             .collection('users')
             .doc(nextProps.authUser.userID)
@@ -50,17 +51,18 @@ class Search extends React.Component {
             });
         }
 
-        if (nextState.have_user_ids && nextState.want_user_ids && !this.state.have_user_ids && !this.state.want_user_ids) {
+        if (nextState.have_user_ids.length && nextState.want_user_ids.length && (!this.state.have_user_ids.length || !this.state.want_user_ids.length)) {
+            console.log(nextState.have_user_ids + " " + nextState.want_user_ids);
+            console.log(nextState.have_user_ids.filter(value => nextState.want_user_ids.includes(value)));
             this.setState({
-                users_list: this.state.have_user_ids.filter(value => this.state.want_user_ids.includes(value))
+                users_list: nextState.have_user_ids.filter(value => nextState.want_user_ids.includes(value))
             });
-            console.log(this.state.users_list);
+            //console.log("selected users list: " + this.state.users_list);
         }
     }
 
     getUserIDs = (tag_ids, target) => {
         // receives tag_ids and returns users who has one of them
-        console.log(tag_ids);
 
         this.props.firebase.store.collection('tags').onSnapshot(querySnapshot => {
             let users_set = [];
@@ -76,7 +78,7 @@ class Search extends React.Component {
                 }
             });
 
-            console.log("users_set" + users_set);
+            console.log("users_set" + users_set + " " + target);
 
             if (target === 'have') {
                 this.setState({
@@ -94,6 +96,9 @@ class Search extends React.Component {
     render() {
         return (
             <div>
+                {this.state.users_list.map((user_id, index) => (
+                    <li key={user_id}>{user_id}</li>
+                ))}
             </div>
         );
     }
