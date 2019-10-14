@@ -4,32 +4,90 @@ import withAuthorization from '../../Auth/Session/withAuthorization';
 class Search extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            tags_list: this.props.firebase.store.collection('tags'),
-            user_list: null,
+            users_list: [],
+            have_user_ids: [],
+            want_user_ids: [],
+        };
+    }
+
+    componentDidMount() {
+        if (this.props.authUser) {
+            this.props.firebase.store
+            .collection('users')
+            .doc(this.props.authUser.userID)
+            .collection('have_want_set')
+            .doc(this.props.selected_set_id)
+            .get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    this.getUserIDs(data.have, 'want');
+                    this.getUserIDs(data.want, 'have');
+                }
+            });
+        }
+
+        if (this.state.have_user_ids && this.state.want_user_ids) {
+            this.setState({
+                users_list: this.state.have_user_ids.filter(value => this.state.want_user_ids.includes(value))
+            });
         }
     }
-    
-    componentDidMount() {
-        this.handleSearch(this.props.selected_set_id);
-        //this.setState(handleSearch(set));
+
+    componentWillUpdate(nextProps, nextState) {
+        if (nextProps.authUser && !this.props.authUser) {
+            this.props.firebase.store
+            .collection('users')
+            .doc(nextProps.authUser.userID)
+            .collection('have_want_set')
+            .doc(this.props.selected_set_id)
+            .get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    this.getUserIDs(data.have, 'want');
+                    this.getUserIDs(data.want, 'have');
+                }
+            });
+        }
+
+        if (nextState.have_user_ids && nextState.want_user_ids && !this.state.have_user_ids && !this.state.want_user_ids) {
+            this.setState({
+                users_list: this.state.have_user_ids.filter(value => this.state.want_user_ids.includes(value))
+            });
+            console.log(this.state.users_list);
+        }
     }
 
-    handleSearch(set) {
-        //const have = this.props.selected_set_id.have;
-        //const want = this.props.selected_set_id.want;
+    getUserIDs = (tag_ids, target) => {
+        // receives tag_ids and returns users who has one of them
+        console.log(tag_ids);
 
-        //console.log("have: "+have);
-        //console.log('want: '+want);
-        console.log(this.props.selected_set_id);
-        this.state.tags_list.onSnapshot(querySnapshot => {
+        this.props.firebase.store.collection('tags').onSnapshot(querySnapshot => {
+            let users_set = [];
             querySnapshot.forEach(doc => {
-                console.log(doc.data());
+                if (tag_ids.includes(doc.id)) {
+                    if (target === 'have') {
+                        users_set = users_set.concat(doc.data().have);
+                        console.log(users_set);
+                    } else if (target === 'want') {
+                        users_set = users_set.concat(doc.data().want);
+                        console.log(users_set);
+                    }
+                }
+            });
 
-            })
+            console.log("users_set" + users_set);
+
+            if (target === 'have') {
+                this.setState({
+                    have_user_ids: Array.from(new Set(users_set)),
+                });
+            } else if (target === 'want') {
+                this.setState({
+                    want_user_ids: Array.from(new Set(users_set)),
+                });
+            }
         });
-        return {};
     }
 
 

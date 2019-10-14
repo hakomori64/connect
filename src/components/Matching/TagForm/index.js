@@ -2,6 +2,7 @@ import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import Search from '../Search';
 
+
 class TagForm extends React.Component {
     constructor(props) {
         super(props);
@@ -22,9 +23,15 @@ class TagForm extends React.Component {
                         querySnapshot.forEach(doc => {
                             items.push(doc.id);
                         });
+                        console.log(items);
                         this.setState({
-                            items: items
+                            items: items,
                         });
+                        if (items.length > 0) {
+                            this.setState({
+                                value: items[0],
+                            });
+                        }
                     }
                 );
         }
@@ -48,6 +55,7 @@ class TagForm extends React.Component {
                 </option>
             );
         });
+        console.log(this.state.value);
         return (
             <div>
                 <form onSubmit={event => this.handleSubmit(event)}>
@@ -59,7 +67,7 @@ class TagForm extends React.Component {
                 </select>
                 <input type='submit' />
                 </form>
-                <Search selected_set_id={this.state.value} />
+                {this.props.authUser && this.state.value ? <Search key={this.props.authUser} selected_set_id={this.state.value} /> : <div>Loading....</div>}
             </div>
         );
     }
