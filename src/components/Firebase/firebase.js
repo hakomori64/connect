@@ -21,7 +21,7 @@ class Firebase {
         this.auth = app.auth();
         this.store = app.firestore();
         this.storage = app.storage();
-        this.authUser = null;
+        this.user_info = null;
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -39,29 +39,36 @@ class Firebase {
     onAuthUserListener = (next, fallback) =>
         this.auth.onAuthStateChanged(authUser => {
             if (authUser) {
-                const user_ref = this.store.collection('users').doc(authUser.uid);
-                user_ref.get()
-                .then(doc => {
-                    const icon_ref = this.storage.ref(`users/${authUser.uid}/icon`);
-                    icon_ref.getDownloadURL().then(url => {
-                        this.authUser = doc.data();
-                        this.authUser.icon_url = url;
-                    }).catch(error => {
-                        if (error.code === 'storage/object-not-found') {
-                            const icon_ref = this.storage.ref('users/default.png');
-                            icon_ref.getDownloadURL().then(url => {
-                                this.authUser = doc.data();
-                                this.authUser.icon_url = url;
-                            })
-                        }
-                    }).finally(() => {
-                        next(this.authUser);
-                    });
-                });
+                this.getUserInfo(next, fallback)(authUser.uid);
             } else {
                 fallback();
             }
         });
+
+    getUserInfo = (next, fallback) => user_id => {
+        const user_ref = this.store.collection('users').doc(user_id);
+        user_ref.get().then(doc => {
+            if (doc.exists) {
+                const icon_ref = this.storage.ref(`users/${user_id}/icon`);
+                icon_ref.getDownloadURL().then(url => {
+                    this.user_info = doc.data();
+                    this.user_info.icon_url = url;
+                }).catch(error => {
+                    if (error.code === 'storage/object-not-found') {
+                        const icon_ref = this.storage.ref('users/default.png');
+                        icon_ref.getDownloadURL().then(url => {
+                            this.user_info = doc.data();
+                            this.user_info.icon_url = url;
+                        });
+                    }
+                }).finally(() => {
+                    next(this.user_info);
+                })
+            } else {
+                fallback();
+            }
+        })
+    }
 }
 
 export default Firebase;

@@ -22,7 +22,6 @@ const withAuthentication = Component => {
                     this.setState({ authUser: null });
                 }
             );
-            console.log(this.state.authUser);
         }
 
         componentWillUnmount() {

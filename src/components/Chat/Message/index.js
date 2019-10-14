@@ -33,34 +33,21 @@ class Message extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user_icon_ref: this.props.firebase.storage.ref(`users/${this.props.message.left_user_id}/icon`),
-            default_icon_ref: this.props.firebase.storage.ref('users/default.png'),
-            icon_url: null,
-        }
+            user_info: null,
+        };
     }
-
     componentDidMount() {
-        const { user_icon_ref, default_icon_ref } = this.state;
-        user_icon_ref.getDownloadURL().then(url => {
-            this.setState({
-                icon_url: url
-            });
-        }).catch(error => {
-            if (error.code === 'storage/object-not-found') {
-                default_icon_ref.getDownloadURL().then(url => {
-                    this.setState({
-                        icon_url: url
-                    });
-                });
-            }
-        })
+        this.props.firebase.getUserInfo(
+            user_info => this.setState({user_info}),
+            () => this.setState({user_info: null}),
+        )(this.props.message.left_user_id);
     }
 
     render() {
         return (
             <Container>
                 <Thumbnail>
-                    <Img src={this.state.icon_url} alt={this.props.message.left_by} />
+                    <Img src={this.state.user_info ? this.state.user_info.icon_url : null} alt={this.props.message.left_by} />
                 </Thumbnail>
                 <Header>
                     {this.props.message.left_by}
