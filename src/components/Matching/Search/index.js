@@ -6,6 +6,7 @@ class Search extends React.Component {
         super(props);
         this.state = {
             users_list: [],
+            users_info: [],
             have_user_ids: [],
             want_user_ids: [],
         };
@@ -60,6 +61,19 @@ class Search extends React.Component {
             //console.log("selected users list: " + this.state.users_list);
         }
 
+        if (nextState.users_list.length && !this.state.users_list.length) {
+            nextState.users_list.forEach((value, index) => {
+                this.props.firebase.getUserInfo(
+                    user_info => {
+                        const { users_info } = this.state;
+                        users_info.push(user_info);
+                        this.setState({users_info});
+                    },
+                    () => {},
+                )(value)
+            });
+        }
+
         return true;
     }
 
@@ -96,10 +110,15 @@ class Search extends React.Component {
 
 
     render() {
+        if (this.state.users_info.length) console.log(this.state.users_info);
         return (
             <div>
-                {this.state.users_list.map((user_id, index) => (
-                    <li key={user_id}>{user_id}</li>
+                {this.state.users_info.map(user_info => (
+                    <div key={user_info.userID} >
+                        <img src={user_info.icon_url} alt={user_info.username} width="200px" height="200px" />
+                        <div>username: {user_info.username}</div>
+                        <div>email: {user_info.email}</div>
+                    </div>
                 ))}
             </div>
         );
