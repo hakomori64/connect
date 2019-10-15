@@ -42,8 +42,8 @@ class SignUpFormBase extends Component {
                         connect_request: [],
                     });
                     user_ref.collection("have_want_set").add({
-                        have: null,
-                        want: null,
+                        have: [],
+                        want: [],
                     });
                 }
             )
