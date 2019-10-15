@@ -11,6 +11,7 @@ class AddHaveWantSet extends React.Component {
             have_ids: [],
             want_ids: [],
             set_name: "",
+            description: "",
         };
     }
 
@@ -31,11 +32,17 @@ class AddHaveWantSet extends React.Component {
     }
 
     handleHaveChange = selectedOptions => {
+        if (!selectedOptions) selectedOptions = [];
         this.setState({have_ids: selectedOptions.map(option => option.value)});
     }
 
     handleWantChange = selectedOptions => {
+        if (!selectedOptions) selectedOptions = [];
         this.setState({want_ids: selectedOptions.map(option => option.value)});
+    }
+
+    handleDescriptionChange = event => {
+        this.setState({description: event.target.value});
     }
 
     handleSubmit = event => {
@@ -43,6 +50,7 @@ class AddHaveWantSet extends React.Component {
         this.props.firebase.store.collection('users').doc(this.props.authUser.userID).collection('have_want_set').doc(this.state.set_name).set({
             have: this.state.have_ids,
             want: this.state.want_ids,
+            description: this.state.description,
         });
 
         const { tags } = this.state;
@@ -59,6 +67,7 @@ class AddHaveWantSet extends React.Component {
         this.setState({
             error: false,
             set_name: "",
+            description: "",
             have_ids: [],
             want_ids: [],
             tags: tags,
@@ -100,10 +109,12 @@ class AddHaveWantSet extends React.Component {
                         isMulti={true}
                         onChange={this.handleWantChange}
                     />
+                    <div>description</div>
+                    <textarea cols="30" rows="10" onChange={this.handleDescriptionChange}></textarea>
                     <button
                         type="submit"
                         onClick={this.handleSubmit}
-                        disabled={!(this.state.set_name && this.state.have_ids.length && this.state.want_ids.length)}
+                        disabled={!(this.state.set_name && this.state.have_ids.length && this.state.want_ids.length && this.state.description)}
                     >
                         セットを送信する
                     </button>
