@@ -56,11 +56,11 @@ class TagForm extends React.Component {
     }
 
     render(){
-        const options = this.state.have_want_sets.map(item => {
+        const options = this.state.have_want_sets.map(have_want_set => {
             return (
                 {
-                    value: item,
-                    label: item
+                    value: have_want_set,
+                    label: have_want_set,
                 }
             );
         });
