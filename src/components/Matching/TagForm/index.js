@@ -1,6 +1,7 @@
 import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import Search from '../Search';
+import Select from 'react-select';
 
 
 class TagForm extends React.Component {
@@ -27,47 +28,42 @@ class TagForm extends React.Component {
                         this.setState({
                             items: items,
                         });
-                        if (items.length > 0) {
-                            this.setState({
-                                value: items[0],
-                            });
-                        }
                     }
                 );
         }
     }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
+    handleChange = selectedOption => {
+        let value = "";
+        if (selectedOption) {
+            value = selectedOption.label;
+        }
+        this.setState({
+            value: value,
+        });
     }
 
     render(){
-        const options = this.state.items.map(i => {
+        const options = this.state.items.map(item => {
             return (
-                <option
-                    key={i} 
-                    value={i}>
-                {i}
-                </option>
+                {
+                    value: item,
+                    label: item
+                }
             );
         });
-        console.log(this.state.value);
+        const selectedItem = {
+            label: this.state.value,
+            value: this.state.value,
+        }
         return (
             <div>
-                <form onSubmit={event => this.handleSubmit(event)}>
-                <select
-                    value={this.state.value}
+                <Select
+                    value={selectedItem}
+                    options={options}
                     onChange={this.handleChange}
-                >
-                    {options}
-                </select>
-                <input type='submit' />
-                </form>
-                {this.props.authUser && this.state.value ? <Search key={this.props.authUser} selected_set_id={this.state.value} /> : <div>Loading....</div>}
+                />
+                {this.props.authUser && this.state.value ? <Search key={this.props.authUser} selected_set_id={this.state.value} /> : <div>No Matched Users</div>}
             </div>
         );
     }
