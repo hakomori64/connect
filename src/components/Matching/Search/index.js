@@ -1,5 +1,6 @@
 import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
+import Request from '../Request';
 
 class Search extends React.Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class Search extends React.Component {
             users_info: [],
             have_user_ids: [],
             want_user_ids: [],
+            show_popup: false,
         };
     }
 
@@ -110,6 +112,16 @@ class Search extends React.Component {
         });
     }
 
+    togglePopup = user_info => {
+        if (!this.state.show_popup) {
+            this.setState({
+                selected_user_info: user_info
+            })
+        }
+        this.setState({
+            show_popup: !this.state.show_popup,
+        });
+    }
 
     render() {
         if (this.state.users_info.length) console.log(this.state.users_info);
@@ -120,8 +132,10 @@ class Search extends React.Component {
                         <img src={user_info.icon_url} alt={user_info.username} width="200px" height="200px" />
                         <div>username: {user_info.username}</div>
                         <div>email: {user_info.email}</div>
+                        <button onClick={event => this.togglePopup(user_info)}>詳細を見る</button>
                     </div>
                 ))}
+                {this.state.show_popup ? <Request closePopup={this.togglePopup.bind(this)} user_info={this.state.selected_user_info} set_id={this.props.selected_set_id} /> : null}
             </div>
         );
     }

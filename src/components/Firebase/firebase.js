@@ -62,7 +62,13 @@ class Firebase {
                         });
                     }
                 }).finally(() => {
-                    next(this.user_info);
+                    this.user_info.have_want_set = {};
+                    user_ref.collection('have_want_set').onSnapshot(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+                            this.user_info.have_want_set[doc.id] = doc.data();
+                        });
+                        next(this.user_info);
+                    });
                 })
             } else {
                 fallback();

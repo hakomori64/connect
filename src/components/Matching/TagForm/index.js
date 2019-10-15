@@ -8,29 +8,41 @@ class TagForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: [],
+            have_want_sets: [],
             value: '',
         }
     }
 
+    load_have_want_sets = authUser => {
+        this.props.firebase.store.collection('users')
+        .doc(authUser.userID)
+        .collection('have_want_set')
+        .onSnapshot(
+            querySnapshot => {
+                const have_want_sets = [];
+                querySnapshot.forEach(doc => {
+                    have_want_sets.push(doc.id);
+                });
+                console.log(have_want_sets);
+                this.setState({
+                    have_want_sets: have_want_sets,
+                });
+            }
+        );
+    }
+
     componentDidMount() {
         if (this.props.authUser) {
-            this.props.firebase.store.collection('users')
-                .doc(this.props.authUser.userID)
-                .collection('have_want_set')
-                .onSnapshot(
-                    querySnapshot => {
-                        const items = [];
-                        querySnapshot.forEach(doc => {
-                            items.push(doc.id);
-                        });
-                        console.log(items);
-                        this.setState({
-                            items: items,
-                        });
-                    }
-                );
+            this.load_have_want_sets(this.props.authUser);
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.authUser && !this.props.authUser) {
+            this.load_have_want_sets(nextProps.authUser);
+        }
+
+        return true;
     }
 
     handleChange = selectedOption => {
@@ -44,7 +56,7 @@ class TagForm extends React.Component {
     }
 
     render(){
-        const options = this.state.items.map(item => {
+        const options = this.state.have_want_sets.map(item => {
             return (
                 {
                     value: item,
