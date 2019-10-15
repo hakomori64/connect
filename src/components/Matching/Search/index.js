@@ -46,6 +46,8 @@ class Search extends React.Component {
             .get().then(doc => {
                 if (doc.exists) {
                     const data = doc.data();
+                    if (!('have' in data)) data.have = [];
+                    if (!('want' in data)) data.want = [];
                     this.getUserIDs(data.have, 'want');
                     this.getUserIDs(data.want, 'have');
                 }

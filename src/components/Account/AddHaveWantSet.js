@@ -19,6 +19,8 @@ class AddHaveWantSet extends React.Component {
             querySnapshot.forEach(doc => {
                 const { tags } = this.state;
                 tags[doc.id] = doc.data();
+                if (!("have" in tags[doc.id])) tags[doc.id].have = [];
+                if (!("want" in tags[doc.id])) tags[doc.id].want = [];
                 this.setState({tags});
             });
         });
