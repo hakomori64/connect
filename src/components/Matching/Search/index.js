@@ -124,17 +124,20 @@ class Search extends React.Component {
     }
 
     render() {
-        if (this.state.users_info.length) console.log(this.state.users_info);
+        let candidates = <div>Now Loading Candidates...</div>
+        if (this.state.users_info.length) {
+            candidates = this.state.users_info.map(user_info => (
+                <div key={user_info.userID} >
+                    <img src={user_info.icon_url} alt={user_info.username} width="200px" height="200px" />
+                    <div>username: {user_info.username}</div>
+                    <div>email: {user_info.email}</div>
+                    <button onClick={event => this.togglePopup(user_info)}>詳細を見る</button>
+                </div>
+            ))
+        }
         return (
             <div>
-                {this.state.users_info.map(user_info => (
-                    <div key={user_info.userID} >
-                        <img src={user_info.icon_url} alt={user_info.username} width="200px" height="200px" />
-                        <div>username: {user_info.username}</div>
-                        <div>email: {user_info.email}</div>
-                        <button onClick={event => this.togglePopup(user_info)}>詳細を見る</button>
-                    </div>
-                ))}
+                {candidates}
                 {this.state.show_popup ? <Request closePopup={this.togglePopup.bind(this)} user_info={this.state.selected_user_info} set_id={this.props.selected_set_id} /> : null}
             </div>
         );

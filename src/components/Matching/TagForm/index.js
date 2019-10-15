@@ -26,6 +26,7 @@ class TagForm extends React.Component {
                 console.log(have_want_sets);
                 this.setState({
                     have_want_sets: have_want_sets,
+                    value: have_want_sets[0],
                 });
             }
         );
