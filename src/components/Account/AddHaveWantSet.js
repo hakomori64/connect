@@ -43,6 +43,7 @@ class AddHaveWantSet extends React.Component {
 
     handleDescriptionChange = event => {
         this.setState({description: event.target.value});
+        console.log(this.state.description);
     }
 
     handleSubmit = event => {
@@ -110,7 +111,7 @@ class AddHaveWantSet extends React.Component {
                         onChange={this.handleWantChange}
                     />
                     <div>description</div>
-                    <textarea cols="30" rows="10" onChange={this.handleDescriptionChange}></textarea>
+                    <textarea value={this.state.description} cols="30" rows="10" onChange={this.handleDescriptionChange}></textarea>
                     <button
                         type="submit"
                         onClick={this.handleSubmit}
