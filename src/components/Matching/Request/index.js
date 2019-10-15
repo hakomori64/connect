@@ -102,6 +102,10 @@ class Request extends React.Component {
                     <div>
                         {set.want.map(want => <li key={want}>{want}</li>)}
                     </div>
+                    <div>description:</div>
+                    <div>
+                        {set.description}
+                    </div>
                 </div>
             ))
         }
