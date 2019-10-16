@@ -1,5 +1,6 @@
 import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
+import RequestForm from './RequestForm';
 import styled from 'styled-components';
 
 const PopUp = styled.div`
@@ -10,7 +11,7 @@ const PopUp = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    margin: auto;
+    margin: 10px;
     background-color: rgba(0,0,0, 0.5);
 `
 
@@ -23,7 +24,7 @@ const PopupInner = styled.div`
     margin: auto;
     border-radius: 20px;
     background: white;
-    overflow: hidden;
+    overflow: auto;
 `
 
 /**
@@ -119,6 +120,7 @@ class Request extends React.Component {
                     <div>{this.props.user_info.description}</div>
                     <div>マッチ内容:</div>
                     {matched_set}
+                    <RequestForm to={this.props.user_info.userID} />
                     <button onClick={this.props.closePopup}>close popup</button>
                 </PopupInner>
             </PopUp>
