@@ -8,3 +8,4 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const ROOM_LIST = '/rooms';
 export const ROOM = '/rooms/:room_id';
 export const MATCHING = '/search';
+export const APPROVE = '/approve';
