@@ -21,7 +21,7 @@ class Firebase {
         this.auth = app.auth();
         this.store = app.firestore();
         this.storage = app.storage();
-        this.user_info = null;
+        this.getUserInfo.bind(this);
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -49,27 +49,33 @@ class Firebase {
         const user_ref = this.store.collection('users').doc(user_id);
         user_ref.get().then(doc => {
             if (doc.exists) {
+                let user_info = {};
                 const icon_ref = this.storage.ref(`users/${user_id}/icon`);
                 icon_ref.getDownloadURL().then(url => {
-                    this.user_info = doc.data();
-                    this.user_info.icon_url = url;
+                    user_info = doc.data();
+                    user_info.icon_url = url;
+                    user_info.have_want_set = {};
+                    user_ref.collection('have_want_set').onSnapshot(querySnapshot => {
+                        querySnapshot.forEach(have_want_set_ref => {
+                            user_info.have_want_set[have_want_set_ref.id] = have_want_set_ref.data();
+                        });
+                        next(user_info);
+                    });
                 }).catch(error => {
                     if (error.code === 'storage/object-not-found') {
                         const icon_ref = this.storage.ref('users/default.png');
                         icon_ref.getDownloadURL().then(url => {
-                            this.user_info = doc.data();
-                            this.user_info.icon_url = url;
+                            user_info = doc.data();
+                            user_info.icon_url = url;
+                            user_ref.collection('have_want_set').onSnapshot(querySnapshot => {
+                                querySnapshot.forEach(have_want_set_ref => {
+                                    user_info.have_want_set[have_want_set_ref.id] = have_want_set_ref.data();
+                                });
+                                next(user_info);
+                            });
                         });
                     }
-                }).finally(() => {
-                    this.user_info.have_want_set = {};
-                    user_ref.collection('have_want_set').onSnapshot(querySnapshot => {
-                        querySnapshot.forEach(doc => {
-                            this.user_info.have_want_set[doc.id] = doc.data();
-                        });
-                        next(this.user_info);
-                    });
-                })
+                });
             } else {
                 fallback();
             }

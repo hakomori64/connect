@@ -43,7 +43,6 @@ class ChatRoom extends React.Component {
     }
 
     handleSubmit = event => {
-        event.preventDefault();
         const messages = this.state.messages;
         
         const message = {
@@ -59,6 +58,7 @@ class ChatRoom extends React.Component {
         });
 
         this.state.message_ref.add(message);
+        event.preventDefault();
     }
 
     render() {
