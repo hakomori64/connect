@@ -26,6 +26,7 @@ class TagForm extends React.Component {
                 console.log(have_want_sets);
                 this.setState({
                     have_want_sets: have_want_sets,
+                    value: have_want_sets[0],
                 });
             }
         );
@@ -56,11 +57,11 @@ class TagForm extends React.Component {
     }
 
     render(){
-        const options = this.state.have_want_sets.map(item => {
+        const options = this.state.have_want_sets.map(have_want_set => {
             return (
                 {
-                    value: item,
-                    label: item
+                    value: have_want_set,
+                    label: have_want_set,
                 }
             );
         });
