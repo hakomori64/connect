@@ -28,7 +28,7 @@ class RequestForm extends React.Component {
         const data = {
             room_name: this.state.room_name,
             message: this.state.message,
-            from: this.props.to,
+            from: this.props.authUser.userID,
         };
         this.props.firebase.store.collection("requests").add(data)
             .then(doc => {
@@ -36,7 +36,7 @@ class RequestForm extends React.Component {
                 this.props.firebase.store.runTransaction(transaction => {
                     return transaction.get(user_ref).then(user_doc => {
                         if (!user_doc.exists) {
-                            throw "Document does not exist";
+                            return;
                         }
                         const user_connect_request = user_doc.data().connect_request;
                         user_connect_request.push(doc.id);
