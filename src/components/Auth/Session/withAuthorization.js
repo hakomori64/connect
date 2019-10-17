@@ -15,7 +15,7 @@ const withAuthorization = condition => Component => {
             }
         }
         componentDidMount() {
-            this.listener = this.props.firebase.onAuthUserListener(
+            this.auth = this.props.firebase.onAuthUserListener(
                 authUser => {
                     if (!condition(authUser)) {
                         this.props.history.push(ROUTES.SIGN_IN);
@@ -29,7 +29,7 @@ const withAuthorization = condition => Component => {
         }
 
         componentWillUnmount() {
-            this.listener();
+            this.auth();
         }
 
         render() {
