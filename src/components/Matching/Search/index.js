@@ -15,6 +15,7 @@ const styles = {
         justifyContent: 'space-around',
         overflow: 'hidden',
         backgroundColor: '#eeeeee',
+        borderRadius: '10px!important',
     },
     gridList: {
         width: 500,
@@ -148,15 +149,19 @@ class Search extends React.Component {
         if (this.state.users_info.length) {
             candidates = (
                 <div styles={styles.root}>
-                    <GridList cellHeight={180} styles={styles.gridList}>
+                    <GridList cellHeight={300} styles={styles.gridList}>
                         {this.state.users_info.map(user_info => (
                             <GridListTile key={user_info.icon_url} >
                                 <img src={user_info.icon_url} alt={user_info.icon_url} />
                                 <GridListTileBar 
                                     title={user_info.username}
-                                    subtitle={<span>by: {user_info.email}</span>}
+                                    subtitle={<span>{user_info.email}</span>}
                                     actionIcon={
-                                        <IconButton arial-label={`info about ${user_info.username}`} styles={styles.icon}>
+                                        <IconButton
+                                            arial-label={`info about ${user_info.username}`}
+                                            styles={styles.icon}
+                                            onClick={event => this.togglePopup(user_info)}
+                                        >
                                             <InfoIcon />
                                         </IconButton>
                                     }
