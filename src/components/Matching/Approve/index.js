@@ -48,6 +48,10 @@ class Approve extends React.Component {
 
     handleApproval = request_info => {
         this.props.firebase.store.collection('requests').doc(request_info.id).delete();
+        this.props.authUser.connect_request = this.props.authUser.connect_request.filter(request_id => request_id !== request_info.id);
+        this.props.firebase.store.collection('users').doc(this.props.authUser.userID).update({
+            connect_request: this.props.authUser.connect_request,
+        });
         this.props.firebase.store.collection('rooms').add({
             name: request_info.room_name,
             members: [this.props.authUser.userID, request_info.from.userID],
@@ -65,6 +69,11 @@ class Approve extends React.Component {
                     console.log("Transaction failed: ", error);
                 });
             });
+        });
+        let { requests_info } = this.state;
+        requests_info = requests_info.filter(value => request_info.id !== value.id);
+        this.setState({
+            requests_info: requests_info,
         });
     }
 

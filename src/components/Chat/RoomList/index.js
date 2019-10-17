@@ -15,6 +15,7 @@ class RoomList extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.authUser && !this.props.authUser) {
+            console.log(nextProps.authUser);
             nextProps.authUser.room_ids.forEach(room_id => {
                 this.props.firebase.store.collection('rooms').doc(room_id).get().then(doc => {
                     const messages_ref = doc.ref.collection('messages');
