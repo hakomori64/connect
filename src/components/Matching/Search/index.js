@@ -1,6 +1,29 @@
 import React from 'react';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import Request from '../Request';
+
+
+const styles = {
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: '#eeeeee',
+    },
+    gridList: {
+        width: 500,
+        height: 450,
+    },
+    icon: {
+        color: 'rgba(255, 255, 255, 0.54)',
+    },
+};
 
 class Search extends React.Component {
     constructor(props) {
@@ -39,7 +62,6 @@ class Search extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.authUser && !this.props.authUser) {
-            console.log("here");
             this.props.firebase.store
             .collection('users')
             .doc(nextProps.authUser.userID)
@@ -90,10 +112,8 @@ class Search extends React.Component {
                 if (tag_ids.includes(doc.id)) {
                     if (target === 'have') {
                         users_set = users_set.concat(doc.data().have);
-                        console.log(users_set);
                     } else if (target === 'want') {
                         users_set = users_set.concat(doc.data().want);
-                        console.log(users_set);
                     }
                 }
             });
@@ -126,14 +146,27 @@ class Search extends React.Component {
     render() {
         let candidates = <div>Now Loading Candidates...</div>
         if (this.state.users_info.length) {
-            candidates = this.state.users_info.map(user_info => (
-                <div key={user_info.userID} >
-                    <img src={user_info.icon_url} alt={user_info.username} width="200px" height="200px" />
-                    <div>username: {user_info.username}</div>
-                    <div>email: {user_info.email}</div>
-                    <button onClick={event => this.togglePopup(user_info)}>詳細を見る</button>
+            candidates = (
+                <div styles={styles.root}>
+                    <GridList cellHeight={180} styles={styles.gridList}>
+                        {this.state.users_info.map(user_info => (
+                            <GridListTile key={user_info.icon_url} >
+                                <img src={user_info.icon_url} alt={user_info.icon_url} />
+                                <GridListTileBar 
+                                    title={user_info.username}
+                                    subtitle={<span>by: {user_info.email}</span>}
+                                    actionIcon={
+                                        <IconButton arial-label={`info about ${user_info.username}`} styles={styles.icon}>
+                                            <InfoIcon />
+                                        </IconButton>
+                                    }
+                                />
+                            </GridListTile>
+                        ))}
+                    </GridList>
+
                 </div>
-            ))
+            );
         }
         return (
             <div>
