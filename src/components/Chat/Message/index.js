@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withFirebase } from '../../Firebase';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+//import Typography from '@material-ui/core/Typography';
 
-
-
-const Container = styled.div`
+const Container_chat = styled.div`
 display: grid;
 grid-template-columns: 60px auto;
-grid-template-rows: 30px auto;
+grid-template-rows: 20px auto;
 `;
 const Thumbnail = styled.div`
 grid-row: 1/3;
@@ -45,7 +46,10 @@ class Message extends React.Component {
 
     render() {
         return (
-            <Container>
+            <React.Fragment>
+            <CssBaseline />
+            <Container fixed>
+            <Container_chat>
                 <Thumbnail>
                     <Img src={this.state.user_info ? this.state.user_info.icon_url : null} alt={this.props.message.left_by} />
                 </Thumbnail>
@@ -56,9 +60,10 @@ class Message extends React.Component {
                 <Sentence>
                     {this.props.message.content}
                 </Sentence>
+            </Container_chat>
             </Container>
-
-        )
+            </React.Fragment>
+        );
     }
 }
 
