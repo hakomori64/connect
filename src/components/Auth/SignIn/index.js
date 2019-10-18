@@ -99,7 +99,7 @@ class SignInFormBase extends Component {
                         </div>
                         <TextField
                             variant="outlined"
-                            margin="nomal"
+                            margin="normal"
                             required
                             fullWidth
                             id="email"
@@ -112,7 +112,7 @@ class SignInFormBase extends Component {
                         />
                         <TextField
                             variant="outlined"
-                            margin="nomal"
+                            margin="normal"
                             required
                             fullWidth
                             name="password"
