@@ -99,7 +99,7 @@ class Approve extends React.Component {
         let request_list = this.state.no_requests ? <div>No Requests</div> : <div>Now Loading...</div>;
         if (this.state.requests_info.length) {
             request_list = this.state.requests_info.map(request_info => (
-                <ListItem key={request_info.id} alignItems="flex-start" dence button onClick={event => this.handleApproval(request_info)}>
+                <ListItem key={request_info.id} alignItems="flex-start" dense button onClick={event => this.handleApproval(request_info)}>
                     <ListItemAvatar>
                         <Avatar alt={request_info.from.username} src={request_info.from.icon_url} />
                     </ListItemAvatar>
