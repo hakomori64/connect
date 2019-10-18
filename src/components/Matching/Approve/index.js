@@ -1,6 +1,24 @@
 import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+//import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography'
 
+const styles = makeStyles(theme => ({
+    root: {
+        with: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
+    inline: {
+        display: 'inline',
+    },
+}));
 
 class Approve extends React.Component {
     constructor(props) {
@@ -81,14 +99,34 @@ class Approve extends React.Component {
         let request_list = this.state.no_requests ? <div>No Requests</div> : <div>Now Loading...</div>;
         if (this.state.requests_info.length) {
             request_list = this.state.requests_info.map(request_info => (
-                <div key={request_info.id}>{request_info.from.username}さんあなたに友達リクエストを送信しました。<button onClick={event => this.handleApproval(request_info)}>承認</button></div>
+                <ListItem key={request_info.id} alignItems="flex-start" dense button onClick={event => this.handleApproval(request_info)}>
+                    <ListItemAvatar>
+                        <Avatar alt={request_info.from.username} src={request_info.from.icon_url} />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={request_info.from.username}
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    component="span"
+                                    variant="body2"
+                                    className={styles.inline}
+                                    color="textPrimary"
+                                >
+                                    {request_info.from.username}さんがあなたに友達リクエストを送信しました。
+                                </Typography>
+                                {"承認"}
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
             ))
             console.log(request_list);
         }
         return (
-            <div>
+            <List className={styles.root}>
                 {request_list}
-            </div>
+            </List>
         )
     }
 }
