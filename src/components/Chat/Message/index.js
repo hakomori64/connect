@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 //import Typography from '@material-ui/core/Typography';
 
-const Container_chat = styled.div`
+const ContainerChat = styled.div`
 display: grid;
 grid-template-columns: 60px auto;
 grid-template-rows: 20px auto;
@@ -47,21 +47,21 @@ class Message extends React.Component {
     render() {
         return (
             <React.Fragment>
-            <CssBaseline />
-            <Container fixed>
-            <Container_chat>
-                <Thumbnail>
-                    <Img src={this.state.user_info ? this.state.user_info.icon_url : null} alt={this.props.message.left_by} />
-                </Thumbnail>
-                <Header>
-                    {this.props.message.left_by}
-                    {this.props.message.timestamp.toString()}
-                </Header>
-                <Sentence>
-                    {this.props.message.content}
-                </Sentence>
-            </Container_chat>
-            </Container>
+                <CssBaseline />
+                <Container fixed>
+                    <ContainerChat>
+                        <Thumbnail>
+                            <Img src={this.state.user_info ? this.state.user_info.icon_url : null} alt={this.props.message.left_by} />
+                        </Thumbnail>
+                        <Header>
+                            {this.props.message.left_by}
+                            {this.props.message.timestamp.toString()}
+                        </Header>
+                        <Sentence>
+                            {this.props.message.content}
+                        </Sentence>
+                    </ContainerChat>
+                </Container>
             </React.Fragment>
         );
     }
