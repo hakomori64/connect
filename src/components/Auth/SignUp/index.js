@@ -132,7 +132,7 @@ class SignUpFormBase extends Component {
                                     autoComplete="username"
                                     name="username"
                                     variant="outlined"
-                                    marginTop="normal"
+                                    style={{marginTop: '20px'}}
                                     required
                                     fullWidth
                                     id="username"
