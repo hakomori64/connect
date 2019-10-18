@@ -124,7 +124,7 @@ class SignUpFormBase extends Component {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <form className={styles.form} onSubmit={this.onSubmit} disabled={isInvalid}>
+                    <form className={styles.form} onSubmit={this.onSubmit}>
                         {error && <p>{error.message}</p>}
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
@@ -194,6 +194,7 @@ class SignUpFormBase extends Component {
                             variant="contained"
                             color="primary"
                             className={styles.submit}
+                            disabled={isInvalid}
                         >
                             Sign Up
                         </Button>
