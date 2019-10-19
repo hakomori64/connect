@@ -33,7 +33,7 @@ const SignOutButton = ({ firebase }) => ( // 受け取ったpropsからfirebase�
     <ButtonShadow>
         <FabPosision className={FabPosision}>
             <Fab color="default" aria-label="add" onClick={firebase.doSignOut}>
-                <ExitToApp/>
+                <ExitToApp color="secondary"/>
             </Fab>
         </FabPosision>
     </ButtonShadow>

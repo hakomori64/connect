@@ -50,12 +50,12 @@ box-shadow:inset 0 0 4px rgb(0,0,0,0.08);
 
 const NavigationAuth = () => (
     <div>
-    <BottomNavigation>
+    <BottomNavigation style={{flexDirection: 'column'}}>
             <Link to={ROUTES.LANDING}>  
                 <ButtonShadow>
                     <FabPosision className={FabPosision}>
                         <Fab color="default" aria-label="add">
-                            <FlightLandIcon color="secondary"/>
+                            <FlightLandIcon color="inherit"/>
                         </Fab>
                     </FabPosision>
                 </ButtonShadow>
@@ -66,7 +66,7 @@ const NavigationAuth = () => (
                 <ButtonShadow>
                     <FabPosision className={FabPosision}>
                         <Fab color="default" aria-label="add">
-                            <HomeIcon color="secondary"/>
+                            <HomeIcon color="inherit"/>
                         </Fab>
                     </FabPosision>
                 </ButtonShadow>
@@ -76,7 +76,7 @@ const NavigationAuth = () => (
                 <ButtonShadow>
                     <FabPosision className={FabPosision}>
                         <Fab color="default" aria-label="add">
-                            <AccountBoxIcon color="secondary"/>
+                            <AccountBoxIcon color="inherit"/>
                         </Fab>
                     </FabPosision>
                 </ButtonShadow>
@@ -86,7 +86,7 @@ const NavigationAuth = () => (
                 <ButtonShadow>
                     <FabPosision className={FabPosision}>
                         <Fab color="default" aria-label="add">
-                            <SearchIcon color="secondary"/>
+                            <SearchIcon color="inherit"/>
                         </Fab>
                     </FabPosision>
                 </ButtonShadow>
@@ -96,7 +96,7 @@ const NavigationAuth = () => (
                 <ButtonShadow>
                     <FabPosision className={FabPosision}>
                         <Fab color="default" aria-label="add">
-                            <ContactMailIcon color="secondary"/>
+                            <ContactMailIcon color="inherit"/>
                         </Fab>
                     </FabPosision>
                 </ButtonShadow>
@@ -108,7 +108,7 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-    <BottomNavigation>
+    <BottomNavigation style={{flexDirection: 'column'}}>  
         <Link to={ROUTES.LANDING}>
             <BottomNavigationAction label="FrightLand" value="flightland" icon={<FlightLandIcon />} />
         </Link>
