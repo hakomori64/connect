@@ -1,6 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import withAuthorization from '../Auth/Session/withAuthorization';
 
+const HaveWantBox = styled.div`
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #5d627b;
+    background-color: white;
+    border-top: solid 5px skyblue;
+    box-shadow: 0 3px 5px rgb(0, 0, 0, 0.22);
+`;
 
 class HaveWantSet extends React.Component {
     constructor(props) {
@@ -29,7 +39,9 @@ class HaveWantSet extends React.Component {
         }
         return (
             <div>
+                <HaveWantBox>
                 {have_want_sets}
+                </HaveWantBox>
             </div>
         )
     }

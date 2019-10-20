@@ -17,6 +17,14 @@ const FileUploader = styled.div`
     border-bottom: 1px solid #ff7c7c;
     font-size: 16px;
 `;
+const ProfileBox = styled.div`
+    transform: translateY(15px);
+    padding: 0.5em;
+    margin: 1em 0;
+    background: #f4f4f4;
+    border-left: solid 6px #5bb7ae;
+    box-shadow: 0px 2px 3px rgb(0, 0, 0, 0.33);
+`;
 
 
 class ChangeProfileForm extends React.Component {
@@ -137,6 +145,7 @@ class ChangeProfileForm extends React.Component {
 
         return (
             <div>
+                <ProfileBox>
                 {icon_image}
                 {progress}
                 <form onSubmit={this.handleSubmit}>
@@ -169,6 +178,7 @@ class ChangeProfileForm extends React.Component {
                         {this.state.isDescriptionEditable ? "Save" : "Edit"}
                     </DoneOutline>
                 </IconButton>
+                </ProfileBox>
             </div>
         )
     }

@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { ListItemText, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import Container from '@material-ui/core/Container';
 
 
 
@@ -182,6 +183,7 @@ class Search extends React.Component {
             ))
         }
         return (
+            <Container>
             <List className={styles.root}>
                 
                 {candidates}
@@ -194,6 +196,7 @@ class Search extends React.Component {
                     /> 
                     : null}
             </List>
+            </Container>
         );
     }
 }

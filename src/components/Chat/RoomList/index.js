@@ -12,6 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import Container from '@material-ui/core/Container';
 
 
 const styles = makeStyles(theme => ({
@@ -62,7 +63,7 @@ class RoomList extends React.Component {
     render() {
         return (
             <div>
-                
+                <Container>
                 {Object.entries(this.state.rooms_info) ? Object.keys(this.state.rooms_info).map(room_id => (
                     <span key={room_id}>
                         <ListItem alignItems="flex-start">
@@ -93,6 +94,7 @@ class RoomList extends React.Component {
                         <Divider variant="inset" /> 
                         </span>
                 )) : null}
+                </Container>
             </div>
         )
     }

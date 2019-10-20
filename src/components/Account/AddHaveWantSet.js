@@ -13,6 +13,15 @@ const TextAreaDesign = styled.div`
     outline: none;
 `;
 
+const AddBox = styled.div`
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #5d627b;
+    background-color: white;
+    border-top: solid 5px #5d627b;
+    box-shadow: 0 3px 5px rgb(0, 0, 0, 0.22);
+`;
+
 
 class AddHaveWantSet extends React.Component {
     constructor(props) {
@@ -103,6 +112,7 @@ class AddHaveWantSet extends React.Component {
 
         return (
             <div>
+                <AddBox>
                 <div>Please fill out the form below</div>
                 <form onSubmit={this.handleSubmit}>
                     <div>NAME</div>
@@ -135,6 +145,7 @@ class AddHaveWantSet extends React.Component {
                      <DoneOutline />
                     </IconButton>
                 </form>
+                </AddBox>
             </div>
         )
     }

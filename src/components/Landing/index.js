@@ -98,6 +98,7 @@ const BackGroundCube = styled.div`
 `;
 
 const Content = styled.div`
+    width:30%;
     background-color:rgba(255,255,255,.8);
    border-radius:.25em;
    box-shadow:0 0 .25em rgba(0,0,0,.25);
@@ -110,13 +111,6 @@ const Content = styled.div`
    transform:translate(-50%, -50%);
    z-index: 1;
 `;
-
-const RogoSize = styled.div`
-    width:40%;
-    height:auto;
-
-`;
-
 
 
 class LandingPage extends React.Component {
@@ -144,10 +138,10 @@ class LandingPage extends React.Component {
         </BackGroundTitle>
         <Content>
                 Hello Connect!!
-                    <img src={this.state.icon_url} alt="connect_logo" style={{ width: '80%'}}/> 
-             
-                    {/* <img src={this.state.icon_url} alt="connect_logo" width="400"/> */}
-             
+                {/* <img src={this.state.icon_url} alt="connect_logo"/>  */}
+
+                <img src={this.state.icon_url} alt="connect_logo" style={{ width: '90%'}}/> 
+                {/* <img src={this.state.icon_url} alt="connect_logo" width="400"/> */}
         </Content>
         <BackGroundCube />
         <BackGroundCube />

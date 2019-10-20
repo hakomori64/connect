@@ -2,6 +2,7 @@ import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import Search from '../Search';
 import Select from 'react-select';
+import Container from '@material-ui/core/Container';
 
 
 class TagForm extends React.Component {
@@ -71,6 +72,7 @@ class TagForm extends React.Component {
         }
         return (
             <div>
+                <Container>
                 <h1>Search</h1>
                 <Select
                     value={selectedItem}
@@ -78,6 +80,7 @@ class TagForm extends React.Component {
                     onChange={this.handleChange}
                 />
                 {this.props.authUser && this.state.value ? <Search key={this.props.authUser} selected_set_id={this.state.value} /> : <div>No Matched Users</div>}
+                </Container>
             </div>
         );
     }
