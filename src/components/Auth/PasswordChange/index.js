@@ -10,11 +10,13 @@ const INITIAL_STATE = {
 class PasswordChangeForm extends Component {
     constructor(props) {
         super(props);
+
         this.state = { ...INITIAL_STATE };
     }
 
     onSubmit = event => {
         const { passwordOne } = this.state;
+        
         this.props.firebase.doPasswordUpdate(passwordOne)
         .then(() => {
             this.setState({ ...INITIAL_STATE });

@@ -163,15 +163,6 @@ class Request extends React.Component {
                             </Button>
                         </CardActions>
                     </Card>
-                    <img src={this.props.user_info.icon_url} alt={this.props.user_info.username} width="200px" height="200px" />
-                    <div>user_name: {this.props.user_info.username}</div>
-                    <div>email: {this.props.user_info.email}</div>
-                    <div>description: </div>
-                    <div>{this.props.user_info.description}</div>
-                    <div>マッチ内容:</div>
-                    {matched_set}
-                    <RequestForm to={this.props.user_info.userID} />
-                    <button onClick={this.props.closePopup}>close popup</button>
                 </PopupInner>
             </PopUp>
         )
