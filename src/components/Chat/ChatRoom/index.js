@@ -1,21 +1,23 @@
 import React from 'react';
-import styled from 'styled-components';
+//import styled from 'styled-components';
 
 import Message from '../Message';
 import { withAuthorization } from '../../Auth/Session';
 import Container from '@material-ui/core/Container';
-
+/*
 const MessagePosition = styled.div`
     display: grid;
     grid-template-columns:1fr 1fr 1fr;
     grid-auto-rows: 10px auto 10px;
     position: relative;
 `;
-
+*/
+/*
 const MessagePositions = styled.div`
     grid-column: 2/3;
     grid-row:2/3;
 `;
+*/
 
 class ChatRoom extends React.Component {
     constructor(props) {

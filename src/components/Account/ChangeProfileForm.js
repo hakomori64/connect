@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DoneOutline from '@material-ui/icons/DoneOutline';
-import TextField from '@material-ui/core/TextField';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
 import { TextareaAutosize } from '@material-ui/core';
 
 const FileUploader = styled.div`
