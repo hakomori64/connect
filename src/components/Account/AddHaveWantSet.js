@@ -1,6 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import Select from 'react-select';
 import { withAuthorization } from '../Auth/Session';
+import TextArea from '@material-ui/core/TextareaAutosize';
+import IconButton from '@material-ui/core/IconButton';
+import DoneOutline from '@material-ui/icons/DoneOutline';
+
+const TextAreaDesign = styled.div`
+    border: 2px solid #0a0;  /* 枠線 */
+    border-radius: 10%;   /* 角丸 */
+    outline: none;
+`;
 
 
 class AddHaveWantSet extends React.Component {
@@ -111,14 +122,18 @@ class AddHaveWantSet extends React.Component {
                         onChange={this.handleWantChange}
                     />
                     <div>description</div>
-                    <textarea value={this.state.description} cols="30" rows="10" onChange={this.handleDescriptionChange}></textarea>
-                    <button
+                    <TextArea 
+                        className={TextAreaDesign}
+                        value={this.state.description}
+                        onChange={this.handleDescriptionChange}
+                    />
+                    <IconButton
                         type="submit"
                         onClick={this.handleSubmit}
                         disabled={!(this.state.set_name && this.state.have_ids.length && this.state.want_ids.length && this.state.description)}
                     >
-                        セットを送信する
-                    </button>
+                     <DoneOutline />
+                    </IconButton>
                 </form>
             </div>
         )

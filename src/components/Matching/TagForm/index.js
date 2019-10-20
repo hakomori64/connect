@@ -71,6 +71,7 @@ class TagForm extends React.Component {
         }
         return (
             <div>
+                <h1>Search</h1>
                 <Select
                     value={selectedItem}
                     options={options}

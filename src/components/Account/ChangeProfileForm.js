@@ -1,5 +1,22 @@
 import React from 'react';
 import { withAuthorization } from '../Auth/Session';
+import styled from 'styled-components';
+
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DoneOutline from '@material-ui/icons/DoneOutline';
+import TextField from '@material-ui/core/TextField';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { TextareaAutosize } from '@material-ui/core';
+
+const FileUploader = styled.div`
+    display: block;
+    background: #ff7c7c;
+    box-shadow: 0 3px #cb4848;
+    -webkit-box-shadow: 0 3px #cb4848;
+    border-bottom: 1px solid #ff7c7c;
+    font-size: 16px;
+`;
 
 
 class ChangeProfileForm extends React.Component {
@@ -22,7 +39,7 @@ class ChangeProfileForm extends React.Component {
             });
         }
     }
-
+//upload
     handleSubmit = event => {
         event.preventDefault();
         const { file } = this.state;
@@ -123,8 +140,17 @@ class ChangeProfileForm extends React.Component {
                 {icon_image}
                 {progress}
                 <form onSubmit={this.handleSubmit}>
-                    <input type="file" onChange={this.handleImageChange} />
-                    <button type="submit" onClick={this.handleSubmit}>Upload Image</button>
+                <label 
+                    for="file_upload"
+                    className={FileUploader}
+                    >
+                        <input type="file" id="file_upload" onChange={this.handleImageChange}>
+                    
+                        </input>
+                    <p>
+                    <Button variant="outlined" color="primary" type="submit" onClick={this.handleSubmit}>Upload Image</Button>
+                    </p>
+                    </label>
                 </form>
                 <div>
                     {image_preview}
@@ -132,14 +158,17 @@ class ChangeProfileForm extends React.Component {
                 <div>
                     description:
                 </div>
-                <textarea
+                
+                <TextareaAutosize
                     value={description}
                     onChange={this.handleDescriptionChange}
-                >
-                </textarea>
-                <button onClick={this.toggleEditable}>
-                    {this.state.isDescriptionEditable ? "Save" : "Edit"}
-                </button>
+                />
+                
+                <IconButton onClick={this.toggleEditable}>
+                    <DoneOutline>
+                        {this.state.isDescriptionEditable ? "Save" : "Edit"}
+                    </DoneOutline>
+                </IconButton>
             </div>
         )
     }

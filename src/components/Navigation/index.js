@@ -50,7 +50,7 @@ box-shadow:inset 0 0 4px rgb(0,0,0,0.08);
 
 const NavigationAuth = () => (
     <div>
-    <BottomNavigation style={{flexDirection: 'column'}}>
+    <BottomNavigation style={{flexDirection: 'column'}} showLabel={false}>
             <Link to={ROUTES.LANDING}>  
                 <ButtonShadow>
                     <FabPosision className={FabPosision}>
@@ -108,9 +108,10 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-    <BottomNavigation style={{flexDirection: 'column'}}>  
+    <div>
+    <BottomNavigation showlabel="false" style={{flexDirection: 'column'}}>  
         <Link to={ROUTES.LANDING}>
-            <BottomNavigationAction label="FrightLand" value="flightland" icon={<FlightLandIcon />} />
+            <BottomNavigationAction showLabel={true} label="FrightLand" value="flightland" icon={<FlightLandIcon />} />
         </Link>
         <Link to={ROUTES.SIGN_IN}>
             <button>
@@ -119,7 +120,8 @@ const NavigationNonAuth = () => (
         </Link>
 
     </BottomNavigation>
-
+    </div>
 );
+
 
 export default Navigation;

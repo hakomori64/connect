@@ -1,6 +1,30 @@
 import React from 'react';
+
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import Request from '../Request';
+
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import { ListItemText, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+
+
+
+const styles = makeStyles(theme => ({
+    root: {
+        with: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
+    inline: {
+        display: 'inline',
+    },
+}));
 
 class Search extends React.Component {
     constructor(props) {
@@ -127,19 +151,49 @@ class Search extends React.Component {
         let candidates = <div>Now Loading Candidates...</div>
         if (this.state.users_info.length) {
             candidates = this.state.users_info.map(user_info => (
-                <div key={user_info.userID} >
-                    <img src={user_info.icon_url} alt={user_info.username} width="200px" height="200px" />
-                    <div>username: {user_info.username}</div>
-                    <div>email: {user_info.email}</div>
-                    <button onClick={event => this.togglePopup(user_info)}>詳細を見る</button>
-                </div>
+                <span key={user_info.userID} >
+                    <ListItem alignItems="flex-start">
+                        <ListItemAvatar>
+                            <Avatar alt={user_info.username} src={user_info.icon_url} />
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={user_info.username}
+                            secondary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={styles.inline}
+                                        color="textPrimary"
+                                    >
+                                        {user_info.email}
+                                    </Typography>
+                                </React.Fragment>
+                            }
+                        />
+                        <ListItemSecondaryAction>
+                            <Button className={styles.button} variant="outlined" onClick={event => this.togglePopup(user_info)}>
+                                詳細を見る
+                            </Button>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Divider variant="inset"/>
+                </span>
             ))
         }
         return (
-            <div>
+            <List className={styles.root}>
+                
                 {candidates}
-                {this.state.show_popup ? <Request closePopup={this.togglePopup.bind(this)} user_info={this.state.selected_user_info} set_id={this.props.selected_set_id} /> : null}
-            </div>
+
+                {this.state.show_popup ? 
+                    <Request
+                        closePopup={this.togglePopup.bind(this)}
+                        user_info={this.state.selected_user_info}
+                        set_id={this.props.selected_set_id}
+                    /> 
+                    : null}
+            </List>
         );
     }
 }

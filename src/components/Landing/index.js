@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withFirebase } from '../Firebase';
+
 
 const BackGround = styled.div`
     @import url("https://fonts.googleapis.com/css?family=Montserrat:700");
@@ -109,13 +111,43 @@ const Content = styled.div`
    z-index: 1;
 `;
 
-const LandingPage = () => (
-    <BackGround>
+const RogoSize = styled.div`
+    width:40%;
+    height:auto;
+
+`;
+
+
+
+class LandingPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            icon_url: null,   
+        };
+    } 
+    componentDidMount() {
+        const icon_ref = this.props.firebase.storage.ref('icon.png');
+        icon_ref.getDownloadURL().then(url => {
+            this.setState({
+                icon_url: url,
+            })
+        })
+    }
+
+    render() {
+        return (
+            
+                 <BackGround>
         <BackGroundTitle>
             Landing Page
         </BackGroundTitle>
         <Content>
                 Hello Connect!!
+                    <img src={this.state.icon_url} alt="connect_logo" style={{ width: '80%'}}/> 
+             
+                    {/* <img src={this.state.icon_url} alt="connect_logo" width="400"/> */}
+             
         </Content>
         <BackGroundCube />
         <BackGroundCube />
@@ -124,6 +156,8 @@ const LandingPage = () => (
         <BackGroundCube />
         <BackGroundCube />
     </BackGround>
-);
+        )
+    }
+}
 
-export default LandingPage;
+export default withFirebase(LandingPage);

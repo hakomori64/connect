@@ -2,6 +2,14 @@ import React from 'react';
 import withAuthorization from '../../Auth/Session/withAuthorization';
 import RequestForm from './RequestForm';
 import styled from 'styled-components';
+import { makeStyles } from '@material-ui/styles';
+import { CardMedia, Typography, Grid } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+
 
 const PopUp = styled.div`
     position: fixed;
@@ -13,7 +21,7 @@ const PopUp = styled.div`
     bottom: 0;
     margin: 10px;
     background-color: rgba(0,0,0, 0.5);
-`
+`;
 
 const PopupInner = styled.div`
     position: absolute;
@@ -25,7 +33,13 @@ const PopupInner = styled.div`
     border-radius: 20px;
     background: white;
     overflow: auto;
-`
+`;
+
+const styles = makeStyles({
+    card: {
+        maxWidth: 345,
+    }
+});
 
 /**
  * This component should be used as below
@@ -113,6 +127,42 @@ class Request extends React.Component {
         return (
             <PopUp>
                 <PopupInner>
+                    <Card className={styles.card} key={this.props.userID}>
+                        <CardMedia
+                            component="img"
+                            alt={this.props.user_info.username}
+                            height="140"
+                            image={this.props.user_info.icon_url}
+                            title={this.props.user_info.username}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {this.props.user_info.username}
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="h3">
+                                {this.props.user_info.email}
+                            </Typography>
+                            <Grid container spacing={2}>
+                            <Grid item>
+                                {this.props.user_info.description}
+                            </Grid>
+                            <Grid item>
+                                マッチ内容
+                            </Grid>
+                            <Grid item>
+                                <List>
+                                    {matched_set}
+                                </List>
+                            </Grid>
+                            </Grid>
+                        </CardContent>
+                        <CardActions>
+                            <RequestForm to={this.props.user_info.userID} />
+                            <Button size="small" color="primary" onClick={this.props.closePopup}>
+                                Close PopUp
+                            </Button>
+                        </CardActions>
+                    </Card>
                     <img src={this.props.user_info.icon_url} alt={this.props.user_info.username} width="200px" height="200px" />
                     <div>user_name: {this.props.user_info.username}</div>
                     <div>email: {this.props.user_info.email}</div>
