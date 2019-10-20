@@ -30,8 +30,16 @@ class HaveWantSet extends React.Component {
                     return (
                         <div key={set_id}>
                             <div>{set_id}</div>
-                            {this.props.authUser.have_want_set[set_id].have.map(have_id => (<li key={have_id}>{have_id}</li>))}
-                            {this.props.authUser.have_want_set[set_id].want.map(want_id => (<li key={want_id}>{want_id}</li>))}
+                            {
+                                this.props.authUser.have_want_set[set_id].have.map(have_id => (
+                                    <li key={have_id}>{have_id}</li>
+                                ))
+                            }
+                            {
+                                this.props.authUser.have_want_set[set_id].want.map(want_id => (
+                                    <li key={want_id}>{want_id}</li>
+                                ))
+                            }
                         </div>
                     )
                 })
