@@ -69,7 +69,15 @@ class Firebase {
                             user_info.icon_url = url;
                             user_ref.collection('have_want_set').onSnapshot(querySnapshot => {
                                 querySnapshot.forEach(have_want_set_ref => {
-                                    user_info.have_want_set[have_want_set_ref.id] = have_want_set_ref.data();
+                                    console.log(user_info.have_want_set);
+                                    console.log(have_want_set_ref.data());
+                                    if(user_info.have_want_set ){
+                                        user_info.have_want_set = {};
+                                    }
+                                    user_info.have_want_set = {
+                                        ...user_info.have_want_set,
+                                        [have_want_set_ref.id]: have_want_set_ref.data(),
+                                    };
                                 });
                                 next(user_info);
                             });

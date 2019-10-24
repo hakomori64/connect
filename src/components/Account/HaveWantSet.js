@@ -13,7 +13,7 @@ class HaveWantSet extends React.Component {
     render() {
         let have_want_sets = <div>Now Loading...</div>
         if (this.props.authUser) {
-            if (!Object.entries(this.props.authUser.have_want_set).length) {
+            if (!(this.props.authUser.have_want_set)) {
                 have_want_sets = <div>No Have Want Set</div>
             } else {
                 have_want_sets = Object.keys(this.props.authUser.have_want_set).map(set_id => {
