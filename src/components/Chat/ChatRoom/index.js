@@ -64,6 +64,9 @@ class ChatRoom extends React.Component {
     render() {
         return (
             <div>
+                <h1>
+                    {this.props.match.params.room_id}
+                </h1>
                 <div>
                     {this.state.messages.map((message, index) => (
                         this.props.authUser ? <Message message={message} key={index} /> : null
